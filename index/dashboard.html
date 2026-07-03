@@ -1,0 +1,100 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="prefetch" href="tools/growth.html">
+<link rel="prefetch" href="tools/vaccination.html">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amore Premium Parenting App</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brandPink: '#FF7676',
+                        brandSoftPink: '#FFF0F0',
+                        cardBg: '#FFFFFF',
+                    },
+                    boxShadow: {
+                        'neumorphic': '10px 10px 30px #d1d9e6, -10px -10px 30px #ffffff',
+                        'neumorphic-inset': 'inset 5px 5px 10px #d1d9e6, inset -5px -5px 10px #ffffff',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-brandSoftPink min-h-screen p-4 selection:bg-brandPink/20">
+
+    <div class="max-w-md mx-auto bg-cardBg rounded-[40px] p-8 shadow-neumorphic relative overflow-hidden border border-white">
+        <!-- Decorative Backgrounds -->
+        <div class="absolute -top-20 -right-20 w-40 h-40 bg-brandSoftPink rounded-full opacity-50"></div>
+        <div class="absolute top-20 -left-10 w-24 h-24 bg-pink-100 rounded-full opacity-30"></div>
+
+        <!-- Header -->
+        <header class="text-center relative z-10 mb-10">
+            <div class="inline-block p-3 bg-brandPink rounded-3xl shadow-lg mb-4 transform rotate-[-10deg]">
+                <svg class="w-8 h-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 18H9v-2H7v-2H5v-2H3V7a4 4 0 014-4h7a4 4 0 014 4z"/></svg>
+            </div>
+            <h1 class="text-4xl font-extrabold text-gray-900 leading-tight tracking-tight">AMORE</h1>
+            <p class="text-gray-600 mt-2 font-medium max-w-xs mx-auto">Access 20+ premium tools for effortless baby care.</p>
+        </header>
+
+<!-- 1. Growth Tool (Updated to <a> tag) -->
+
+
+<a href="tools/growth.html" class="group bg-white p-6 rounded-3xl shadow-neumorphic hover:shadow-neumorphic-inset transition-all duration-300 flex flex-col items-center text-center space-y-4 cursor-pointer border border-transparent hover:border-gray-100 no-underline">
+    <svg class="w-16 h-16 text-green-500" viewBox="0 0 64 64" fill="none">
+        <path d="M44 52H20V12H44V52Z" fill="#A7F3D0" stroke="#10B981" stroke-width="2"/>
+        <path d="M52 52H12V44H52V52Z" fill="#A7F3D0" stroke="#10B981" stroke-width="2"/>
+    </svg>
+    <h3 class="text-lg font-bold text-gray-800">Growth</h3>
+</a>
+
+            <!-- 2. Vaccination -->
+            <div class="group bg-white p-6 rounded-3xl shadow-neumorphic hover:shadow-neumorphic-inset transition-all duration-300 flex flex-col items-center text-center space-y-4 cursor-pointer border border-transparent hover:border-gray-100">
+                <svg class="w-16 h-16 text-purple-500" viewBox="0 0 64 64" fill="none"><path d="M52 36L36 52L12 28L28 12L52 36Z" fill="#E9D5FF" stroke="#A855F7" stroke-width="2"/></svg>
+                <h3 class="text-lg font-bold text-gray-800">Vaccination</h3>
+            </div>
+            <!-- 3. Feed Log -->
+            <div class="group bg-white p-6 rounded-3xl shadow-neumorphic hover:shadow-neumorphic-inset transition-all duration-300 flex flex-col items-center text-center space-y-4 cursor-pointer border border-transparent hover:border-gray-100">
+                <svg class="w-16 h-16 text-yellow-500" viewBox="0 0 64 64" fill="none"><path d="M32 56C45.25 56 56 45.25 56 32C56 18.75 45.25 8 32 8C18.75 8 8 18.75 8 32C8 45.25 18.75 56 32 56Z" fill="#FEF3C7" stroke="#F59E0B" stroke-width="2"/></svg>
+                <h3 class="text-lg font-bold text-gray-800">Feed Log</h3>
+            </div>
+            <!-- 4. Sleep -->
+            <div class="group bg-white p-6 rounded-3xl shadow-neumorphic hover:shadow-neumorphic-inset transition-all duration-300 flex flex-col items-center text-center space-y-4 cursor-pointer border border-transparent hover:border-gray-100">
+                <svg class="w-16 h-16 text-blue-500" viewBox="0 0 64 64" fill="none"><path d="M48 32C48 40.84 40.84 48 32 48C23.16 48 16 40.84 16 32C16 23.16 23.16 16 32 16C40.84 16 48 23.16 48 32Z" fill="#DBEAFE" stroke="#3B82F6" stroke-width="2"/></svg>
+                <h3 class="text-lg font-bold text-gray-800">Sleep</h3>
+            </div>
+        </div>
+
+        <!-- CTA -->
+        <div class="mt-10">
+            <button class="w-full bg-gray-900 text-white font-bold py-4 rounded-2xl shadow-lg hover:bg-gray-800 transition transform active:scale-95">Unlock All 20+ Premium Tools</button>
+        </div>
+    </div>
+    <script src="script.js"></script>
+
+<!-- Loading Overlay -->
+<div id="loader" class="fixed inset-0 bg-brandSoftPink flex items-center justify-center z-50 transition-opacity duration-500">
+    <div class="animate-spin rounded-full h-12 w-12 border-t-4 border-b-4 border-brandPink"></div>
+</div>
+
+<script>
+    // Page load hote hi loader ko gayab kar do
+    window.addEventListener('load', () => {
+        document.getElementById('loader').style.opacity = '0';
+        setTimeout(() => {
+            document.getElementById('loader').style.display = 'none';
+        }, 500);
+    });
+</script>
+
+
+</body>
+</html>

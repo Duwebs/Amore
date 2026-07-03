@@ -1,0 +1,95 @@
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+    .onboarding-step { animation: fadeIn 0.4s ease-out; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+</style>
+
+<div class="max-w-md mx-auto min-h-screen bg-[#FDFBF7] flex flex-col font-sans">
+    <!-- Progress Bar -->
+    <div class="px-8 pt-12 pb-6">
+        <div class="w-full bg-gray-200/50 h-1.5 rounded-full overflow-hidden">
+            <div id="progress-bar" class="h-full bg-gradient-to-r from-pink-400 to-rose-500 transition-all duration-700 w-[25%]"></div>
+        </div>
+    </div>
+
+    <div class="flex-1 px-8 py-6">
+        <!-- Step 1: Language -->
+        <div id="step-1" class="onboarding-step">
+            <h2 class="text-3xl font-bold text-gray-900 leading-tight">Choose your <br> language</h2>
+            <div class="grid grid-cols-2 gap-4 mt-8">
+                <button onclick="setLang('English')" class="p-6 bg-white border border-gray-100 rounded-3xl shadow-sm hover:border-rose-300 transition-all">Aa<br>English</button>
+                <button onclick="setLang('Hindi')" class="p-6 bg-white border border-gray-100 rounded-3xl shadow-sm hover:border-rose-300 transition-all">क<br>Hindi</button>
+            </div>
+        </div>
+
+        <!-- Step 2: Role -->
+        <div id="step-2" class="onboarding-step hidden">
+            <h2 id="title-2" class="text-3xl font-bold text-gray-900">What's your role?</h2>
+            <div class="space-y-4 mt-8">
+                <button onclick="next(3)" class="w-full p-6 bg-white border border-pink-100 rounded-3xl flex items-center gap-5 hover:border-pink-300 transition">👩 <span id="opt-mother">Wife | Mother</span></button>
+                <button onclick="next(3)" class="w-full p-6 bg-white border border-blue-100 rounded-3xl flex items-center gap-5 hover:border-blue-300 transition">👨 <span id="opt-father">Husband | Father</span></button>
+            </div>
+        </div>
+
+        <!-- Step 3: Gender -->
+        <div id="step-3" class="onboarding-step hidden">
+            <h2 id="title-3" class="text-3xl font-bold text-gray-900">Blessed with a...</h2>
+            <div class="grid grid-cols-2 gap-4 mt-8">
+                <button onclick="next(4)" class="p-8 bg-white border border-pink-100 rounded-3xl hover:border-pink-300 transition">🎀<br><span id="opt-girl">Girl</span></button>
+                <button onclick="next(4)" class="p-8 bg-white border border-blue-100 rounded-3xl hover:border-blue-300 transition">🧸<br><span id="opt-boy">Boy</span></button>
+            </div>
+        </div>
+
+        <!-- Step 4: Date -->
+        <div id="step-4" class="onboarding-step hidden">
+            <h2 id="title-4" class="text-3xl font-bold text-gray-900 leading-tight">Your baby came in the world on?</h2>
+            <div class="mt-10 bg-white p-6 rounded-3xl shadow-sm border border-gray-100">
+                <input type="date" id="dob" onchange="enableFinish()" class="w-full text-center text-2xl p-4 bg-transparent outline-none font-bold text-rose-500">
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer Button -->
+    <div class="p-8">
+        <button id="main-btn" disabled onclick="finish()" class="w-full py-5 bg-gray-200 text-white font-bold rounded-2xl shadow-lg transition-all disabled:opacity-50">CONTINUE</button>
+    </div>
+</div>
+
+<script>
+    const langData = {
+        'English': { t2: "What's your role?", t3: "Blessed with a...", t4: "Your baby came in the world on?", m: "Wife | Mother", f: "Husband | Father", g: "Girl", b: "Boy" },
+        'Hindi': { t2: "आपकी भूमिका क्या है?", t3: "हमें एक आशीर्वाद मिला है...", t4: "आपके बच्चे का जन्मदिन कब है?", m: "पत्नी | माँ", f: "पति | पिता", g: "बेटी", b: "बेटा" }
+    };
+
+    let step = 1;
+    function setLang(lang) {
+        if(lang === 'Hindi') {
+            document.getElementById('title-2').innerText = langData.Hindi.t2;
+            document.getElementById('title-3').innerText = langData.Hindi.t3;
+            document.getElementById('title-4').innerText = langData.Hindi.t4;
+            document.getElementById('opt-mother').innerText = langData.Hindi.m;
+            document.getElementById('opt-father').innerText = langData.Hindi.f;
+            document.getElementById('opt-girl').innerText = langData.Hindi.g;
+            document.getElementById('opt-boy').innerText = langData.Hindi.b;
+        }
+        next(2);
+    }
+
+    function next(s) {
+        document.getElementById('step-'+step).classList.add('hidden');
+        document.getElementById('step-'+s).classList.remove('hidden');
+        step = s;
+        document.getElementById('progress-bar').style.width = (s * 25) + "%";
+        if(s === 4) document.getElementById('main-btn').innerText = "FINISH SETUP";
+    }
+
+    function enableFinish() {
+        document.getElementById('main-btn').disabled = false;
+        document.getElementById('main-btn').classList.replace('bg-gray-200', 'bg-rose-500');
+    }
+
+    function finish() {
+        localStorage.setItem('onboardingComplete', 'true');
+        window.location.href = "dashboard.html"; // Yahan apne dashboard file ka naam rakhein
+    }
+</script>

@@ -1,3 +1,13 @@
+<script>
+document.onkeydown = function(e) {
+    if (e.ctrlKey && (e.keyCode === 67 || e.keyCode === 86 || e.keyCode === 85 || e.keyCode === 69)) {
+        return false;
+    }
+    return true;
+};
+</script>
+
+
 const dailyTips = [
     { age: "3 days old", text: "Hello Dad, we get to meet finally! This makes me happy." },
     { age: "4 days old", text: "I love the sound of your voice, keep talking to me!" },

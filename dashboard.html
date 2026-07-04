@@ -1,5 +1,4 @@
 
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -61,43 +60,65 @@
 </style>
 
 <!-- Daily Tip Card -->
-<div class="max-w-sm mx-auto my-6 bg-gradient-to-br from-[#FFF5F7] to-[#FFEDF3] rounded-[2rem] p-6 border border-white shadow-[0_8px_30px_rgb(255,105,180,0.15)] relative overflow-hidden">
+<div class="max-w-sm mx-auto my-6 bg-gradient-to-br from-[#FFF5F7] to-[#FFEDF3] rounded-[2rem] p-6 border border-white shadow-[0_8px_30px_rgba(255,77,141,0.15)] relative overflow-hidden">
     
     <!-- Branding Badge -->
     <div class="flex items-center gap-2 mb-4">
         <div class="w-8 h-8 rounded-full bg-white flex items-center justify-center shadow-sm">
-            <span class="text-rose-500">❤️</span>
+            <span class="text-rose-500 text-sm">❤️</span>
         </div>
-        <span class="text-rose-500 font-bold tracking-wide uppercase text-[10px]">Amore Daily Tip</span>
+        <span class="text-rose-500 font-bold tracking-wider uppercase text-[10px]">Amore Daily Tip</span>
     </div>
 
     <div class="flex items-center gap-4">
         <!-- Animated Baby Container -->
-        <div class="flex-shrink-0 w-20 h-20 bg-white/60 backdrop-blur-md rounded-2xl flex items-center justify-center border border-white animate-float">
-            <img src="https://cdn-icons-png.flaticon.com/512/3069/3069187.png" alt="Baby" class="w-14 h-14">
+        <div class="flex-shrink-0 w-20 h-20 bg-white/60 backdrop-blur-md rounded-2xl flex items-center justify-center border border-white">
+            <!-- Image tag mein aspect-ratio aur loading="lazy" add kiya -->
+            <img src="https://cdn-icons-png.flaticon.com/512/3069/3069187.png" 
+                 alt="Cute Baby" 
+                 loading="lazy"
+                 class="w-14 h-14 object-contain">
         </div>
         
         <!-- Text Content -->
         <div class="flex-1">
             <h3 class="text-lg font-bold text-gray-800 leading-tight">Baby Says - Hello World!</h3>
-            <!-- ID Yahan Add Ki -->
-            <p id="tip-age" class="text-xs text-rose-400 font-medium mt-1">...</p>
+            <p id="tip-age" class="text-xs text-rose-400 font-medium mt-1">Fetching age...</p>
         </div>
     </div>
 
     <!-- Message Body -->
-    <!-- ID Yahan Add Ki -->
     <p id="tip-text" class="text-gray-600 text-sm mt-5 leading-relaxed bg-white/40 p-4 rounded-xl italic">
-        "..."
+        "Loading today's tip for you..."
     </p>
 
-    <!-- Button -->
+    <!-- Share Button -->
     <button onclick="shareWhatsApp()" 
-            class="w-full mt-5 bg-[#FF4D8D] text-white py-3 rounded-2xl font-bold shadow-lg shadow-pink-200">
-        <span>💬</span> Share with hubby
+            aria-label="Share on WhatsApp"
+            class="w-full mt-5 bg-[#FF4D8D] text-white py-3 rounded-2xl font-bold shadow-lg shadow-pink-200 flex items-center justify-center gap-2 transition-transform active:scale-[0.98]">
+        <img src="https://raw.githubusercontent.com/Duwebs/Amore/0330d3b149c76272060e0e8473e520a9ed711645/assets/whatsapp.png" 
+             alt="" 
+             class="w-5 h-5 object-contain">
+        <span>Share with hubby</span>
     </button>
 </div>
 
+<script>
+    // Example: Is function se aap text update kar sakte ho
+    function updateTip(age, message) {
+        document.getElementById('tip-age').innerText = age;
+        document.getElementById('tip-text').innerText = `"${message}"`;
+    }
+
+    function shareWhatsApp() {
+        const text = document.getElementById('tip-text').innerText;
+        const url = `https://wa.me/?text=${encodeURIComponent(text)}`;
+        window.open(url, '_blank');
+    }
+    
+    // Page load hote hi demo data set kar sakte ho
+    window.onload = () => updateTip("12 Weeks Old", "Keep talking to your baby, they love your voice!");
+</script>
 
 <!-- 1. Growth Tool (Updated to <a> tag) -->
 
@@ -150,6 +171,8 @@
 </script>
 
 <script src="script.js"></script>
+
+<body oncontextmenu="return false;" onselectstart="return false;" ondragstart="return false;">
 
 </body>
 </html>

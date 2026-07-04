@@ -1,91 +1,83 @@
-<script src="https://cdn.tailwindcss.com"></script>
-<style>
-    .onboarding-step { animation: fadeIn 0.4s ease-out; }
-    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-    input[type="date"]::-webkit-calendar-picker-indicator { cursor: pointer; }
-</style>
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amore App</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300&display=swap" rel="stylesheet">
+    <style>
+        body, html { margin: 0; padding: 0; height: 100%; font-family: 'Poppins', sans-serif; }
 
-<div class="w-full min-h-screen bg-[#FDFBF7] flex flex-col font-sans overflow-x-hidden">
-    
-    <div class="w-full px-6 pt-8 pb-4">
-        <div class="w-full bg-gray-200/50 h-2 rounded-full overflow-hidden">
-            <div id="progress-bar" class="h-full bg-gradient-to-r from-pink-400 to-rose-500 transition-all duration-700 w-[25%]"></div>
-        </div>
-    </div>
-
-    <div class="flex-1 flex flex-col justify-center px-6 py-6">
-        <div id="step-1" class="onboarding-step w-full">
-            <h2 class="text-3xl font-bold text-gray-900 leading-tight">Choose your <br> language</h2>
-            <div class="grid grid-cols-2 gap-4 mt-8">
-                <button onclick="setLang('English')" class="p-6 bg-white border border-gray-100 rounded-3xl shadow-sm hover:border-rose-300 transition-all active:scale-95">Aa<br>English</button>
-                <button onclick="setLang('Hindi')" class="p-6 bg-white border border-gray-100 rounded-3xl shadow-sm hover:border-rose-300 transition-all active:scale-95">क<br>Hindi</button>
-            </div>
-        </div>
-
-        <div id="step-2" class="onboarding-step hidden w-full">
-            <h2 id="title-2" class="text-3xl font-bold text-gray-900">What's your role?</h2>
-            <div class="space-y-4 mt-8">
-                <button onclick="next(3)" class="w-full p-6 bg-white border border-pink-100 rounded-3xl flex items-center gap-5 hover:border-pink-300 transition active:scale-[0.98]">👩 <span id="opt-mother">Wife | Mother</span></button>
-                <button onclick="next(3)" class="w-full p-6 bg-white border border-blue-100 rounded-3xl flex items-center gap-5 hover:border-blue-300 transition active:scale-[0.98]">👨 <span id="opt-father">Husband | Father</span></button>
-            </div>
-        </div>
-
-        <div id="step-3" class="onboarding-step hidden w-full">
-            <h2 id="title-3" class="text-3xl font-bold text-gray-900">Blessed with a...</h2>
-            <div class="grid grid-cols-2 gap-4 mt-8">
-                <button onclick="next(4)" class="p-8 bg-white border border-pink-100 rounded-3xl hover:border-pink-300 transition active:scale-95">🎀<br><span id="opt-girl">Girl</span></button>
-                <button onclick="next(4)" class="p-8 bg-white border border-blue-100 rounded-3xl hover:border-blue-300 transition active:scale-95">🧸<br><span id="opt-boy">Boy</span></button>
-            </div>
-        </div>
-
-        <div id="step-4" class="onboarding-step hidden w-full">
-            <h2 id="title-4" class="text-3xl font-bold text-gray-900 leading-tight">Your baby came in the world on?</h2>
-            <div class="mt-10 bg-white p-4 rounded-3xl shadow-sm border border-gray-100">
-                <input type="date" id="dob" onchange="enableFinish()" class="w-full text-center text-2xl p-4 bg-transparent outline-none font-bold text-rose-500">
-            </div>
-        </div>
-    </div>
-
-    <div class="p-6">
-        <button id="main-btn" disabled onclick="finish()" class="w-full py-4 bg-gray-200 text-white font-bold rounded-2xl shadow-lg transition-all disabled:opacity-50 active:scale-[0.98]">CONTINUE</button>
-    </div>
-</div>
-
-<script>
-    const langData = {
-        'English': { t2: "What's your role?", t3: "Blessed with a...", t4: "Your baby came in the world on?", m: "Wife | Mother", f: "Husband | Father", g: "Girl", b: "Boy" },
-        'Hindi': { t2: "आपकी भूमिका क्या है?", t3: "हमें एक आशीर्वाद मिला है...", t4: "आपके बच्चे का जन्मदिन कब है?", m: "पत्नी | माँ", f: "पति | पिता", g: "बेटी", b: "बेटा" }
-    };
-
-    let step = 1;
-    function setLang(lang) {
-        if(lang === 'Hindi') {
-            document.getElementById('title-2').innerText = langData.Hindi.t2;
-            document.getElementById('title-3').innerText = langData.Hindi.t3;
-            document.getElementById('title-4').innerText = langData.Hindi.t4;
-            document.getElementById('opt-mother').innerText = langData.Hindi.m;
-            document.getElementById('opt-father').innerText = langData.Hindi.f;
-            document.getElementById('opt-girl').innerText = langData.Hindi.g;
-            document.getElementById('opt-boy').innerText = langData.Hindi.b;
+        /* प्रोफेशनल स्प्लैश स्क्रीन */
+        #splash-screen {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(160deg, #fff5f7 0%, #ffdee9 100%);
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            z-index: 9999; transition: opacity 0.8s ease;
         }
-        next(2);
-    }
 
-    function next(s) {
-        document.getElementById('step-'+step).classList.add('hidden');
-        document.getElementById('step-'+s).classList.remove('hidden');
-        step = s;
-        document.getElementById('progress-bar').style.width = (s * 25) + "%";
-        if(s === 4) document.getElementById('main-btn').innerText = "FINISH SETUP";
-    }
+        /* Figma जैसा लोगो कंटेनर */
+        .logo-container {
+            width: 140px; height: 140px;
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(10px); /* Glassmorphism */
+            border-radius: 30px;
+            display: flex; justify-content: center; align-items: center;
+            box-shadow: 0 20px 40px rgba(255, 105, 180, 0.2);
+            margin-bottom: 25px;
+            animation: bounce-slow 3s infinite ease-in-out;
+        }
 
-    function enableFinish() {
-        document.getElementById('main-btn').disabled = false;
-        document.getElementById('main-btn').classList.replace('bg-gray-200', 'bg-rose-500');
-    }
+        .logo-container img { width: 90px; height: 90px; }
 
-    function finish() {
-        localStorage.setItem('onboardingComplete', 'true');
-        window.location.href = "dashboard.html";
-    }
+        .brand-name {
+            font-family: 'Dancing Script', cursive;
+            font-size: 52px; color: #ff4d8d;
+            margin: 0; text-shadow: 0 5px 10px rgba(0,0,0,0.1);
+        }
+
+        .tagline { color: #ff85a2; font-size: 14px; margin-top: 10px; letter-spacing: 1px; }
+
+        @keyframes bounce-slow {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .hidden { opacity: 0; pointer-events: none; }
+    </style>
+</head>
+<body>
+
+    <div id="splash-screen">
+        <div class="logo-container">
+            <!-- यहाँ आप अपनी इमेज (जैसे watermarked_img_9006008991286514776.png) का लिंक डालें -->
+            <img src="https://cdn-icons-png.flaticon.com/512/3069/3069187.png" alt="Baby Logo">
+        </div>
+        <h1 class="brand-name">Amore</h1>
+        <p class="tagline">Welcome to your world</p>
+    </div>
+
+    <script>
+        window.addEventListener("load", () => {
+            setTimeout(() => {
+                document.getElementById("splash-screen").classList.add("hidden");
+            }, 3000);
+        });
+    </script>
+    
+    <script>
+    window.addEventListener("load", () => {
+        setTimeout(() => {
+            // Check karein kya user ne pehle onboarding puri ki hai?
+            if (localStorage.getItem('onboardingComplete') === 'true') {
+                window.location.href = "dashboard.html";
+            } else {
+                window.location.href = "onboarding.html";
+            }
+        }, 3000); // 3 seconds ka wait
+    });
 </script>
+
+
+</body>
+</html>

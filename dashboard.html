@@ -42,8 +42,58 @@
                 <svg class="w-8 h-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 18H9v-2H7v-2H5v-2H3V7a4 4 0 014-4h7a4 4 0 014 4z"/></svg>
             </div>
             <h1 class="text-4xl font-extrabold text-gray-900 leading-tight tracking-tight">AMORE</h1>
-            <p class="text-gray-600 mt-2 font-medium max-w-xs mx-auto">Access 20+ premium tools for effortless baby care.</p>
+            <p class="text-gray-600 mt-2 font-medium max-w-xs mx-auto">For Your Little One :)</p>
         </header>
+        
+        <!--Daily Tip Card-->
+        
+<style>
+    /* Baby Float Animation */
+    @keyframes float {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-8px); }
+    }
+    .animate-float { animation: float 3s ease-in-out infinite; }
+</style>
+
+<!-- Daily Tip Card -->
+<div class="max-w-sm mx-auto my-6 bg-gradient-to-br from-[#FFF5F7] to-[#FFEDF3] rounded-[2rem] p-6 border border-white shadow-[0_8px_30px_rgb(255,105,180,0.15)] relative overflow-hidden">
+    
+    <!-- Branding Badge -->
+    <div class="flex items-center gap-2 mb-4">
+        <div class="w-8 h-8 rounded-full bg-white flex items-center justify-center shadow-sm">
+            <span class="text-rose-500">❤️</span>
+        </div>
+        <span class="text-rose-500 font-bold tracking-wide uppercase text-[10px]">Amore Daily Tip</span>
+    </div>
+
+    <div class="flex items-center gap-4">
+        <!-- Animated Baby Container -->
+        <div class="flex-shrink-0 w-20 h-20 bg-white/60 backdrop-blur-md rounded-2xl flex items-center justify-center border border-white animate-float">
+            <img src="https://cdn-icons-png.flaticon.com/512/3069/3069187.png" alt="Baby" class="w-14 h-14">
+        </div>
+        
+        <!-- Text Content -->
+        <div class="flex-1">
+            <h3 class="text-lg font-bold text-gray-800 leading-tight">Baby Says - Hello World!</h3>
+            <!-- ID Yahan Add Ki -->
+            <p id="tip-age" class="text-xs text-rose-400 font-medium mt-1">...</p>
+        </div>
+    </div>
+
+    <!-- Message Body -->
+    <!-- ID Yahan Add Ki -->
+    <p id="tip-text" class="text-gray-600 text-sm mt-5 leading-relaxed bg-white/40 p-4 rounded-xl italic">
+        "..."
+    </p>
+
+    <!-- Button -->
+    <button onclick="shareWhatsApp()" 
+            class="w-full mt-5 bg-[#FF4D8D] text-white py-3 rounded-2xl font-bold shadow-lg shadow-pink-200">
+        <span>💬</span> Share with hubby
+    </button>
+</div>
+
 
 <!-- 1. Growth Tool (Updated to <a> tag) -->
 
@@ -78,7 +128,7 @@
             <button class="w-full bg-gray-900 text-white font-bold py-4 rounded-2xl shadow-lg hover:bg-gray-800 transition transform active:scale-95">Unlock All 20+ Premium Tools</button>
         </div>
     </div>
-    <script src="script.js"></script>
+
 
 <!-- Loading Overlay -->
 <div id="loader" class="fixed inset-0 bg-brandSoftPink flex items-center justify-center z-50 transition-opacity duration-500">
@@ -95,6 +145,7 @@
     });
 </script>
 
+<script src="script.js"></script>
 
 </body>
 </html>

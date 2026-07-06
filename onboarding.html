@@ -1,96 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&display=swap');
+        body { font-family: 'Outfit', sans-serif; overflow: hidden; height: 100vh; background-color: #FFFFFF; }
+        
+        .lang-card { transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); cursor: pointer; position: relative; overflow: hidden; }
+        .selected { border: 4px solid #FF4D6D !important; transform: scale(0.95); }
+        .check-icon { display: none; }
+        .selected .check-icon { display: flex; }
+        
+        .slide-out { animation: slideLeft 0.5s forwards; }
+        @keyframes slideLeft { to { transform: translateX(-150%); opacity: 0; } }
+        .header-out { animation: fadeOut 0.4s forwards; }
+        @keyframes fadeOut { to { opacity: 0; transform: translateY(-20px); } }
+    </style>
+</head>
+<body class="flex flex-col">
 
-<script src="https://cdn.tailwindcss.com"></script>
-<style>
-    .onboarding-step { animation: fadeIn 0.4s ease-out; }
-    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-</style>
-
-<div class="max-w-md mx-auto min-h-screen bg-[#FDFBF7] flex flex-col font-sans">
-    <!-- Progress Bar -->
-    <div class="px-8 pt-12 pb-6">
-        <div class="w-full bg-gray-200/50 h-1.5 rounded-full overflow-hidden">
-            <div id="progress-bar" class="h-full bg-gradient-to-r from-pink-400 to-rose-500 transition-all duration-700 w-[25%]"></div>
+    <div id="header" class="relative bg-[#FFFDF5] pt-8 pb-14 px-6 shadow-sm">
+        <h1 class="text-3xl font-extrabold text-[#4A4A4A] leading-tight">Choose your <br>language</h1>
+        <p class="text-[#8E8E8E] mt-3">This helps us to provide content in your preferred language</p>
+        <div class="absolute -bottom-1 left-0 w-full overflow-hidden">
+            <svg viewBox="0 0 500 50" preserveAspectRatio="none" class="h-10 w-full"><path d="M0,0 C150,50 350,50 500,0 L500,50 L0,50 Z" fill="#FFFFFF"></path></svg>
         </div>
     </div>
 
-    <div class="flex-1 px-8 py-6">
-        <!-- Step 1: Language -->
-        <div id="step-1" class="onboarding-step">
-            <h2 class="text-3xl font-bold text-gray-900 leading-tight">Choose your <br> language</h2>
-            <div class="grid grid-cols-2 gap-4 mt-8">
-                <button onclick="setLang('English')" class="p-6 bg-white border border-gray-100 rounded-3xl shadow-sm hover:border-rose-300 transition-all">Aa<br>English</button>
-                <button onclick="setLang('Hindi')" class="p-6 bg-white border border-gray-100 rounded-3xl shadow-sm hover:border-rose-300 transition-all">क<br>Hindi</button>
-            </div>
+    <!-- Updated Uniform Grid -->
+    <div id="grid" class="flex-1 grid grid-cols-2 gap-4 p-5">
+        <!-- Card 1 -->
+        <div onclick="select(this)" class="lang-card bg-[#FFB7B7] p-5 rounded-[30px] flex flex-col justify-center shadow-lg">
+            <h2 class="font-bold text-white text-lg">English</h2>
+            <p class="text-white/80 text-sm font-medium">English</p>
+            <div class="check-icon absolute top-3 right-3 bg-white rounded-full p-1"><svg class="w-4 h-4 text-[#FF4D6D]" fill="currentColor" viewBox="0 0 20 20"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/></svg></div>
+            <img src="https://cdn-icons-png.flaticon.com/128/2920/2920336.png" class="absolute -right-2 -bottom-2 w-16 opacity-60 pointer-events-none">
         </div>
-
-        <!-- Step 2: Role -->
-        <div id="step-2" class="onboarding-step hidden">
-            <h2 id="title-2" class="text-3xl font-bold text-gray-900">What's your role?</h2>
-            <div class="space-y-4 mt-8">
-                <button onclick="next(3)" class="w-full p-6 bg-white border border-pink-100 rounded-3xl flex items-center gap-5 hover:border-pink-300 transition">👩 <span id="opt-mother">Wife | Mother</span></button>
-                <button onclick="next(3)" class="w-full p-6 bg-white border border-blue-100 rounded-3xl flex items-center gap-5 hover:border-blue-300 transition">👨 <span id="opt-father">Husband | Father</span></button>
-            </div>
+        <!-- Card 2 -->
+        <div onclick="select(this)" class="lang-card bg-[#C7B7FF] p-5 rounded-[30px] flex flex-col justify-center shadow-lg">
+            <h2 class="font-bold text-white text-lg">हिन्दी</h2>
+            <p class="text-white/80 text-sm font-medium">Hindi</p>
+            <div class="check-icon absolute top-3 right-3 bg-white rounded-full p-1"><svg class="w-4 h-4 text-[#FF4D6D]" fill="currentColor" viewBox="0 0 20 20"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/></svg></div>
+            <img src="https://cdn-icons-png.flaticon.com/128/2920/2920336.png" class="absolute -right-2 -bottom-2 w-16 opacity-60 pointer-events-none">
         </div>
-
-        <!-- Step 3: Gender -->
-        <div id="step-3" class="onboarding-step hidden">
-            <h2 id="title-3" class="text-3xl font-bold text-gray-900">Blessed with a...</h2>
-            <div class="grid grid-cols-2 gap-4 mt-8">
-                <button onclick="next(4)" class="p-8 bg-white border border-pink-100 rounded-3xl hover:border-pink-300 transition">🎀<br><span id="opt-girl">Girl</span></button>
-                <button onclick="next(4)" class="p-8 bg-white border border-blue-100 rounded-3xl hover:border-blue-300 transition">🧸<br><span id="opt-boy">Boy</span></button>
-            </div>
+        <!-- Card 3 -->
+        <div onclick="select(this)" class="lang-card bg-[#FFD1A9] p-5 rounded-[30px] flex flex-col justify-center shadow-lg">
+            <h2 class="font-bold text-white text-lg">বাংলা</h2>
+            <p class="text-white/80 text-sm font-medium">Bangla</p>
+            <div class="check-icon absolute top-3 right-3 bg-white rounded-full p-1"><svg class="w-4 h-4 text-[#FF4D6D]" fill="currentColor" viewBox="0 0 20 20"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/></svg></div>
+            <img src="https://cdn-icons-png.flaticon.com/128/2920/2920336.png" class="absolute -right-2 -bottom-2 w-16 opacity-60 pointer-events-none">
         </div>
-
-        <!-- Step 4: Date -->
-        <div id="step-4" class="onboarding-step hidden">
-            <h2 id="title-4" class="text-3xl font-bold text-gray-900 leading-tight">Your baby came in the world on?</h2>
-            <div class="mt-10 bg-white p-6 rounded-3xl shadow-sm border border-gray-100">
-                <input type="date" id="dob" onchange="enableFinish()" class="w-full text-center text-2xl p-4 bg-transparent outline-none font-bold text-rose-500">
-            </div>
+        <!-- Card 4 -->
+        <div onclick="select(this)" class="lang-card bg-[#98E4D5] p-5 rounded-[30px] flex flex-col justify-center shadow-lg">
+            <h2 class="font-bold text-white text-lg">తెలుగు</h2>
+            <p class="text-white/80 text-sm font-medium">Telugu</p>
+            <div class="check-icon absolute top-3 right-3 bg-white rounded-full p-1"><svg class="w-4 h-4 text-[#FF4D6D]" fill="currentColor" viewBox="0 0 20 20"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/></svg></div>
+            <img src="https://cdn-icons-png.flaticon.com/128/2920/2920336.png" class="absolute -right-2 -bottom-2 w-16 opacity-60 pointer-events-none">
+        </div>
+        <!-- Card 5 -->
+        <div onclick="select(this)" class="lang-card bg-[#A3C1FF] p-5 rounded-[30px] flex flex-col justify-center shadow-lg">
+            <h2 class="font-bold text-white text-lg">தமிழ்</h2>
+            <p class="text-white/80 text-sm font-medium">Tamil</p>
+            <div class="check-icon absolute top-3 right-3 bg-white rounded-full p-1"><svg class="w-4 h-4 text-[#FF4D6D]" fill="currentColor" viewBox="0 0 20 20"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/></svg></div>
+            <img src="https://cdn-icons-png.flaticon.com/128/2920/2920336.png" class="absolute -right-2 -bottom-2 w-16 opacity-60 pointer-events-none">
+        </div>
+        <!-- Card 6 -->
+        <div onclick="select(this)" class="lang-card bg-[#FFE8A3] p-5 rounded-[30px] flex flex-col justify-center shadow-lg">
+            <h2 class="font-bold text-white text-lg">ಕನ್ನಡ</h2>
+            <p class="text-white/80 text-sm font-medium">Kannada</p>
+            <div class="check-icon absolute top-3 right-3 bg-white rounded-full p-1"><svg class="w-4 h-4 text-[#FF4D6D]" fill="currentColor" viewBox="0 0 20 20"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/></svg></div>
+            <img src="https://cdn-icons-png.flaticon.com/128/2920/2920336.png" class="absolute -right-2 -bottom-2 w-16 opacity-60 pointer-events-none">
         </div>
     </div>
 
-    <!-- Footer Button -->
-    <div class="p-8">
-        <button id="main-btn" disabled onclick="finish()" class="w-full py-5 bg-gray-200 text-white font-bold rounded-2xl shadow-lg transition-all disabled:opacity-50">CONTINUE</button>
+    <div class="p-5">
+        <button id="contBtn" disabled onclick="goNext()" class="w-full bg-gray-300 text-white py-4 rounded-2xl font-bold text-lg transition-all shadow-md">CONTINUE</button>
     </div>
-</div>
 
-<script>
-    const langData = {
-        'English': { t2: "What's your role?", t3: "Blessed with a...", t4: "Your baby came in the world on?", m: "Wife | Mother", f: "Husband | Father", g: "Girl", b: "Boy" },
-        'Hindi': { t2: "आपकी भूमिका क्या है?", t3: "हमें एक आशीर्वाद मिला है...", t4: "आपके बच्चे का जन्मदिन कब है?", m: "पत्नी | माँ", f: "पति | पिता", g: "बेटी", b: "बेटा" }
-    };
-
-    let step = 1;
-    function setLang(lang) {
-        if(lang === 'Hindi') {
-            document.getElementById('title-2').innerText = langData.Hindi.t2;
-            document.getElementById('title-3').innerText = langData.Hindi.t3;
-            document.getElementById('title-4').innerText = langData.Hindi.t4;
-            document.getElementById('opt-mother').innerText = langData.Hindi.m;
-            document.getElementById('opt-father').innerText = langData.Hindi.f;
-            document.getElementById('opt-girl').innerText = langData.Hindi.g;
-            document.getElementById('opt-boy').innerText = langData.Hindi.b;
+    <script>
+        function select(el) {
+            document.querySelectorAll('.lang-card').forEach(i => i.classList.remove('selected'));
+            el.classList.add('selected');
+            const btn = document.getElementById('contBtn');
+            btn.disabled = false;
+            btn.style.backgroundColor = "#FF4D6D";
         }
-        next(2);
-    }
-
-    function next(s) {
-        document.getElementById('step-'+step).classList.add('hidden');
-        document.getElementById('step-'+s).classList.remove('hidden');
-        step = s;
-        document.getElementById('progress-bar').style.width = (s * 25) + "%";
-        if(s === 4) document.getElementById('main-btn').innerText = "FINISH SETUP";
-    }
-
-    function enableFinish() {
-        document.getElementById('main-btn').disabled = false;
-        document.getElementById('main-btn').classList.replace('bg-gray-200', 'bg-rose-500');
-    }
-
-    function finish() {
-        localStorage.setItem('onboardingComplete', 'true');
-        window.location.href = "dashboard.html"; // Yahan apne dashboard file ka naam rakhein
-    }
-</script>
+        function goNext() {
+            document.getElementById('header').classList.add('header-out');
+            document.querySelectorAll('.lang-card').forEach((card, index) => {
+                setTimeout(() => { card.classList.add('slide-out'); }, index * 80);
+            });
+        }
+    </script>
+</body>
+</html>

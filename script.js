@@ -1,11 +1,11 @@
-<script>
+
 document.onkeydown = function(e) {
     if (e.ctrlKey && (e.keyCode === 67 || e.keyCode === 86 || e.keyCode === 85 || e.keyCode === 69)) {
         return false;
     }
     return true;
 };
-</script>
+
 
 
 const dailyTips = [
@@ -44,3 +44,41 @@ function shareWhatsApp() {
     // WhatsApp kholne ka code
     window.open(`https://wa.me/?text=${message}`, '_blank');
 }
+
+
+
+
+
+
+    function select(el) {
+        // 1. Pehle sabhi cards se 'selected' class hatao
+        document.querySelectorAll('.lang-card').forEach(i => i.classList.remove('selected'));
+        
+        // 2. Sirf clicked card par 'selected' class lagao
+        el.classList.add('selected');
+
+        // 3. Language ka naam card ke andar se nikalo (H2 tag se)
+        const lang = el.querySelector('h2').innerText;
+
+        // 4. LocalStorage mein save karo
+        localStorage.setItem('userLanguage', lang);
+
+        // 5. Button ko enable karo
+        const btn = document.getElementById('contBtn');
+        btn.disabled = false;
+        btn.style.backgroundColor = "#FF4D6D";
+    }
+
+    function goNext() {
+        // Animation effects
+        document.getElementById('header').classList.add('header-out');
+        document.querySelectorAll('.lang-card').forEach((card, index) => {
+            setTimeout(() => { card.classList.add('slide-out'); }, index * 80);
+        });
+
+        // Redirect to role.html after animation
+        setTimeout(() => {
+            window.location.href = 'role.html'; 
+        }, 600);
+    }
+

@@ -1,13 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
-<head> 
-
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
- 
- <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"></script>
-
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&display=swap');
@@ -24,9 +19,9 @@
         @keyframes fadeOut { to { opacity: 0; transform: translateY(-20px); } }
     </style>
 </head>
-<body class="flex flex-col">
+<body class="flex flex-col h-screen">
 
-    <div id="header" class="relative bg-[#FFFDF5] pt-8 pb-14 px-6 shadow-sm">
+    <div id="header" class="relative bg-[#FFFDF5] pt-8 pb-14 px-6 shadow-sm flex-none">
         <h1 class="text-3xl font-extrabold text-[#4A4A4A] leading-tight">Choose your <br>language</h1>
         <p class="text-[#8E8E8E] mt-3">This helps us to provide content in your preferred language</p>
         <div class="absolute -bottom-1 left-0 w-full overflow-hidden">
@@ -34,45 +29,38 @@
         </div>
     </div>
 
-    <!-- Updated Uniform Grid -->
-    <div id="grid" class="flex-1 grid grid-cols-2 gap-4 p-5">
-        <!-- Card 1 -->
-        <div onclick="select(this)" class="lang-card bg-[#FFB7B7] p-5 rounded-[30px] flex flex-col justify-center shadow-lg">
+    <div id="grid" class="flex-1 grid grid-cols-2 gap-4 p-5 overflow-y-auto">
+        <div onclick="select(this)" class="lang-card bg-[#FFB7B7] p-4 rounded-3xl flex flex-col justify-center shadow-lg">
             <h2 class="font-bold text-white text-lg">English</h2>
             <p class="text-white/80 text-sm font-medium">English</p>
             <div class="check-icon absolute top-3 right-3 bg-white rounded-full p-1"><svg class="w-4 h-4 text-[#FF4D6D]" fill="currentColor" viewBox="0 0 20 20"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/></svg></div>
             <img src="https://cdn-icons-png.flaticon.com/128/2920/2920336.png" class="absolute -right-2 -bottom-2 w-16 opacity-60 pointer-events-none">
         </div>
-        <!-- Card 2 -->
-        <div onclick="select(this)" class="lang-card bg-[#C7B7FF] p-5 rounded-[30px] flex flex-col justify-center shadow-lg">
+        <div onclick="select(this)" class="lang-card bg-[#C7B7FF] p-4 rounded-3xl flex flex-col justify-center shadow-lg">
             <h2 class="font-bold text-white text-lg">हिन्दी</h2>
             <p class="text-white/80 text-sm font-medium">Hindi</p>
             <div class="check-icon absolute top-3 right-3 bg-white rounded-full p-1"><svg class="w-4 h-4 text-[#FF4D6D]" fill="currentColor" viewBox="0 0 20 20"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/></svg></div>
             <img src="https://cdn-icons-png.flaticon.com/128/2920/2920336.png" class="absolute -right-2 -bottom-2 w-16 opacity-60 pointer-events-none">
         </div>
-        <!-- Card 3 -->
-        <div onclick="select(this)" class="lang-card bg-[#FFD1A9] p-5 rounded-[30px] flex flex-col justify-center shadow-lg">
+        <div onclick="select(this)" class="lang-card bg-[#FFD1A9] p-4 rounded-3xl flex flex-col justify-center shadow-lg">
             <h2 class="font-bold text-white text-lg">বাংলা</h2>
             <p class="text-white/80 text-sm font-medium">Bangla</p>
             <div class="check-icon absolute top-3 right-3 bg-white rounded-full p-1"><svg class="w-4 h-4 text-[#FF4D6D]" fill="currentColor" viewBox="0 0 20 20"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/></svg></div>
             <img src="https://cdn-icons-png.flaticon.com/128/2920/2920336.png" class="absolute -right-2 -bottom-2 w-16 opacity-60 pointer-events-none">
         </div>
-        <!-- Card 4 -->
-        <div onclick="select(this)" class="lang-card bg-[#98E4D5] p-5 rounded-[30px] flex flex-col justify-center shadow-lg">
+        <div onclick="select(this)" class="lang-card bg-[#98E4D5] p-4 rounded-3xl flex flex-col justify-center shadow-lg">
             <h2 class="font-bold text-white text-lg">తెలుగు</h2>
             <p class="text-white/80 text-sm font-medium">Telugu</p>
             <div class="check-icon absolute top-3 right-3 bg-white rounded-full p-1"><svg class="w-4 h-4 text-[#FF4D6D]" fill="currentColor" viewBox="0 0 20 20"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/></svg></div>
             <img src="https://cdn-icons-png.flaticon.com/128/2920/2920336.png" class="absolute -right-2 -bottom-2 w-16 opacity-60 pointer-events-none">
         </div>
-        <!-- Card 5 -->
-        <div onclick="select(this)" class="lang-card bg-[#A3C1FF] p-5 rounded-[30px] flex flex-col justify-center shadow-lg">
+        <div onclick="select(this)" class="lang-card bg-[#A3C1FF] p-4 rounded-3xl flex flex-col justify-center shadow-lg">
             <h2 class="font-bold text-white text-lg">தமிழ்</h2>
             <p class="text-white/80 text-sm font-medium">Tamil</p>
             <div class="check-icon absolute top-3 right-3 bg-white rounded-full p-1"><svg class="w-4 h-4 text-[#FF4D6D]" fill="currentColor" viewBox="0 0 20 20"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/></svg></div>
             <img src="https://cdn-icons-png.flaticon.com/128/2920/2920336.png" class="absolute -right-2 -bottom-2 w-16 opacity-60 pointer-events-none">
         </div>
-        <!-- Card 6 -->
-        <div onclick="select(this)" class="lang-card bg-[#FFE8A3] p-5 rounded-[30px] flex flex-col justify-center shadow-lg">
+        <div onclick="select(this)" class="lang-card bg-[#FFE8A3] p-4 rounded-3xl flex flex-col justify-center shadow-lg">
             <h2 class="font-bold text-white text-lg">ಕನ್ನಡ</h2>
             <p class="text-white/80 text-sm font-medium">Kannada</p>
             <div class="check-icon absolute top-3 right-3 bg-white rounded-full p-1"><svg class="w-4 h-4 text-[#FF4D6D]" fill="currentColor" viewBox="0 0 20 20"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/></svg></div>
@@ -80,7 +68,7 @@
         </div>
     </div>
 
-    <div class="p-5">
+    <div class="p-5 flex-none">
         <button id="contBtn" disabled onclick="goNext()" class="w-full bg-gray-300 text-white py-4 rounded-2xl font-bold text-lg transition-all shadow-md">CONTINUE</button>
     </div>
 

@@ -3,15 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select Role</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&display=swap');
         body { font-family: 'Outfit', sans-serif; background-color: #FFFDF5; min-height: 100vh; display: flex; flex-direction: column; }
         
-        /* Micro-interaction: Card Selection */
-        .role-card { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); cursor: pointer; position: relative; border: 2px solid transparent; }
-        .selected-role { border: 2px solid #FF4D6D !important; background-color: #FFF5F7 !important; transform: scale(1.02); }
-        
+        /* Micro-interactions: Cards */
+        .role-card { 
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
+            cursor: pointer; 
+            border: 2px solid #E5E7EB; 
+        }
+        .selected-role { 
+            border: 2px solid #FF4D6D !important; 
+            background-color: #FFF5F7 !important; 
+            transform: scale(1.02); 
+        }
         .illustration { transition: transform 0.3s ease; }
         .selected-role .illustration { transform: scale(1.1); }
     </style>
@@ -26,28 +34,29 @@
     <div class="flex-1 px-6 space-y-4">
         <div onclick="selectRole(this, 'wife')" class="role-card bg-white p-5 rounded-3xl flex items-center justify-between shadow-lg border border-gray-100">
             <span id="txt-wife" class="font-bold text-xl text-[#4A4A4A]"></span>
-            <img src="https://cdn-icons-png.flaticon.com/128/3067/3067253.png" class="illustration w-20">
+            <img src="https://cdn-icons-png.flaticon.com/128/3067/3067253.png" class="illustration w-16">
         </div>
         
         <div onclick="selectRole(this, 'husband')" class="role-card bg-white p-5 rounded-3xl flex items-center justify-between shadow-lg border border-gray-100">
             <span id="txt-husband" class="font-bold text-xl text-[#4A4A4A]"></span>
-            <img src="https://cdn-icons-png.flaticon.com/128/3067/3067251.png" class="illustration w-20">
+            <img src="https://cdn-icons-png.flaticon.com/128/3067/3067251.png" class="illustration w-16">
         </div>
     </div>
 
     <div class="p-8">
-        <button id="contBtn" disabled onclick="saveAndNext()" class="w-full bg-gray-300 text-white py-4 rounded-2xl font-bold text-lg shadow-lg transition-all duration-300">CONTINUE</button>
+        <button id="contBtn" disabled onclick="saveAndNext()" class="w-full bg-gray-300 text-white py-4 rounded-2xl font-bold text-lg shadow-lg transition-all duration-300">
+            CONTINUE
+        </button>
     </div>
 
     <script>
-        // 1. Data Store
+        // 1. Translations Data
         const translations = {
             "English": { title: "What's your role in the family?", subtitle: "This helps us provide you with relevant content", wife: "Wife | Mother", husband: "Husband | Father", btn: "CONTINUE" },
-            "हिन्दी": { title: "परिवार में आपकी भूमिका क्या है?", subtitle: "यह हमें आपकी भूमिका के अनुसार कंटेंट प्रदान करने में मदद करता है", wife: "पत्नी | माँ", husband: "पति | पिता", btn: "आगे बढ़ें" },
-            "বাংলা": { title: "পরিবারে আপনার ভূমিকা কী?", subtitle: "এটি আমাদের আপনার ভূমিকা অনুযায়ী কন্টেন্ট দিতে সাহায্য করে", wife: "স্ত্রী | মা", husband: "স্বামী | বাবা", btn: "চালিয়ে যান" }
+            "हिन्दी": { title: "परिवार में आपकी भूमिका क्या है?", subtitle: "यह हमें आपकी भूमिका के अनुसार कंटेंट प्रदान करने में मदद करता है", wife: "पत्नी | माँ", husband: "पति | पिता", btn: "आगे बढ़ें" }
         };
 
-        // 2. Logic to set text based on LocalStorage
+        // 2. Load and Apply Content
         const userLang = localStorage.getItem('userLanguage') || "English";
         const langData = translations[userLang] || translations["English"];
 
@@ -57,19 +66,20 @@
         document.getElementById('txt-husband').innerText = langData.husband;
         document.getElementById('contBtn').innerText = langData.btn;
 
-        // 3. Selection Logic (Micro-interaction)
+        // 3. Selection Logic
         function selectRole(el, role) {
             document.querySelectorAll('.role-card').forEach(i => i.classList.remove('selected-role'));
             el.classList.add('selected-role');
-            localStorage.setItem('userRole', role);
+            localStorage.setItem('userRole', role); // Role save kiya
             
             const btn = document.getElementById('contBtn');
             btn.disabled = false;
             btn.style.backgroundColor = "#FF4D6D";
         }
 
+        // 4. Navigate to next page
         function saveAndNext() {
-            window.location.href = "next_page.html"; // Agla step
+            window.location.href = "next_page.html"; // Yahan apni agli file ka naam daal do
         }
     </script>
 </body>

@@ -82,3 +82,33 @@ function shareWhatsApp() {
         }, 600);
     }
 
+
+
+    // 1. Browser ki memory se data nikalo
+    // Agar user ne kuch nahi select kiya, toh default "English" lega
+    const userLang = localStorage.getItem('userLanguage') || "English";
+
+    // 2. Translations ka object (Jo tumne abhi banaya tha)
+    const translations = {
+        "English": { title: "What's your role in the family?", /* ...baaki data... */ },
+        "हिन्दी": { title: "परिवार में आपकी भूमिका क्या है?", /* ...baaki data... */ }
+    };
+
+    // 3. Lang ke hisaab se content set karo
+    const langData = translations[userLang];
+    document.getElementById('title').innerText = langData.title;
+    // ...baaki elements...
+
+
+function goNext() {
+    // 1. Agar tumne animation banayi hai toh wo chalegi
+    document.getElementById('header').classList.add('header-out');
+    document.querySelectorAll('.lang-card').forEach((card, index) => {
+        setTimeout(() => { card.classList.add('slide-out'); }, index * 80);
+    });
+
+    // 2. Browser ko 'role.html' file load karne ka command (The Call)
+    setTimeout(() => {
+        window.location.href = 'role.html'; 
+    }, 600);
+}

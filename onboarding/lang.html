@@ -68,25 +68,39 @@
             <img src="/assets/langkan.svg" class="absolute -right-2 -bottom-2 w-16 opacity-60 pointer-events-none">
         </div>
     </div>
+    
+<div class="p-5">
+    <button id="contBtn" disabled onclick="goNext()" class="w-full bg-gray-300 text-white py-4 rounded-2xl font-bold text-lg transition-all shadow-md">CONTINUE</button>
+</div>
 
-    <div class="p-5">
-        <button id="contBtn" disabled onclick="goNext()" class="w-full bg-gray-300 text-white py-4 rounded-2xl font-bold text-lg transition-all shadow-md">CONTINUE</button>
-    </div>
+<script>
+    function select(el, lang) {
+        // Selection logic
+        document.querySelectorAll('.lang-card').forEach(i => i.classList.remove('selected'));
+        el.classList.add('selected');
+        
+        // Language ko localStorage mein save karo taaki role.html isse padh sake
+        localStorage.setItem('userLanguage', lang);
+        
+        const btn = document.getElementById('contBtn');
+        btn.disabled = false;
+        btn.style.backgroundColor = "#FF4D6D";
+    }
 
-    <script>
-        function select(el) {
-            document.querySelectorAll('.lang-card').forEach(i => i.classList.remove('selected'));
-            el.classList.add('selected');
-            const btn = document.getElementById('contBtn');
-            btn.disabled = false;
-            btn.style.backgroundColor = "#FF4D6D";
-        }
-        function goNext() {
-            document.getElementById('header').classList.add('header-out');
-            document.querySelectorAll('.lang-card').forEach((card, index) => {
-                setTimeout(() => { card.classList.add('slide-out'); }, index * 80);
-            });
-        }
-    </script>
+    function goNext() {
+        // 1. Animation start karo
+        document.getElementById('header').classList.add('header-out');
+        document.querySelectorAll('.lang-card').forEach((card, index) => {
+            setTimeout(() => { card.classList.add('slide-out'); }, index * 80);
+        });
+
+        // 2. Animation khatam hone ke baad redirection (The Bridge)
+        setTimeout(() => {
+            window.location.href = 'role.html'; 
+        }, 600);
+    }
+</script>
+
+
 </body>
 </html>

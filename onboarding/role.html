@@ -7,57 +7,75 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&display=swap');
-        /* Scrollable body */
-        body { font-family: 'Outfit', sans-serif; background-color: #FFFFFF; min-height: 100vh; overflow-y: auto; display: flex; flex-direction: column; }
+        body { font-family: 'Outfit', sans-serif; background-color: #FFFFFF; min-height: 100vh; display: flex; flex-direction: column; }
         
         .header-anim { opacity: 0; animation: slideDown 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
         @keyframes slideDown { from { opacity: 0; transform: translateY(-50px); } to { opacity: 1; transform: translateY(0); } }
         
         .card-anim { opacity: 0; animation: slideRight 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
-        @keyframes slideRight { from { opacity: 0; transform: translateX(100px); } to { opacity: 1; transform: translateX(0); } }
+        @keyframes slideRight { from { opacity: 0; transform: translateX(50px); } to { opacity: 1; transform: translateX(0); } }
         
-        .role-card { transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); cursor: pointer; border: 2px solid #E5E7EB; min-height: 140px; position: relative; overflow: hidden; }
-        .selected-role { border: 4px solid #FF4D6D !important; transform: scale(1.02); }
+        /* 3D Pop-out Logic */
+        .role-card { 
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+            cursor: pointer; border-radius: 12px; height: 140px; 
+            position: relative; display: flex; align-items: center; 
+            justify-content: space-between; padding: 0 20px; 
+            overflow: visible; /* Zaroori hai bahar nikalne ke liye */
+        }
         
-        .illustration { transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); width: 80px; }
-        .selected-role .illustration { transform: translateY(-15px) scale(1.1); }
+        .wife-card { background-color: #FCE7F3; border: 2px solid #FBCFE8; }
+        .husband-card { background-color: #DBEAFE; border: 2px solid #BFDBFE; }
         
-        #contBtn { transition: transform 0.1s ease, background-color 0.3s ease; }
-        #contBtn:active { transform: scale(0.97); }
+        .selected-role { transform: scale(1.02); border-color: #FF4D6D !important; z-index: 10; }
+        
+        .illustration { 
+            width: 100px; 
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            /* Image ko thoda niche se start karenge */
+            position: relative;
+        }
+        
+        /* Click hone par vector upar pop-out hoga */
+        .selected-role .illustration { 
+            transform: translateY(-35px) scale(1.15); 
+            filter: drop-shadow(0 10px 10px rgba(0,0,0,0.15));
+        }
+        
+        #contBtn { transition: all 0.3s ease; }
     </style>
 </head>
 <body>
 
-    <div id="header" class="header-anim relative bg-[#FFFDF5] pt-8 pb-12 px-6 shadow-sm">
+    <div id="header" class="header-anim relative bg-[#FFFDF5] pt-12 pb-16 px-6">
         <h1 id="title" class="text-3xl font-extrabold text-[#4A4A4A] leading-tight"></h1>
-        <p id="subtitle" class="text-[#8E8E8E] mt-3"></p>
+        <p id="subtitle" class="text-[#8E8E8E] mt-3 text-sm"></p>
         <div class="absolute -bottom-1 left-0 w-full overflow-hidden leading-[0]">
             <svg viewBox="0 0 500 50" preserveAspectRatio="none" class="h-10 w-full"><path d="M0,0 C150,50 350,50 500,0 L500,50 L0,50 Z" fill="#FFFFFF"></path></svg>
         </div>
     </div>
 
-    <div id="cards" class="px-6 py-8 space-y-6 flex-1">
-        <div onclick="selectRole(this, 'wife')" class="card-anim role-card bg-white p-6 rounded-3xl flex items-center justify-between shadow-lg border border-gray-100">
-            <span id="txt-wife" class="font-bold text-2xl text-[#4A4A4A]"></span>
+    <div id="cards" class="px-6 py-8 space-y-10 flex-1">
+        <div onclick="selectRole(this, 'wife')" class="card-anim role-card wife-card">
+            <span id="txt-wife" class="font-bold text-xl text-gray-700"></span>
             <img src="https://cdn-icons-png.flaticon.com/128/3067/3067253.png" class="illustration">
         </div>
         
-        <div onclick="selectRole(this, 'husband')" class="card-anim role-card bg-white p-6 rounded-3xl flex items-center justify-between shadow-lg border border-gray-100">
-            <span id="txt-husband" class="font-bold text-2xl text-[#4A4A4A]"></span>
+        <div onclick="selectRole(this, 'husband')" class="card-anim role-card husband-card">
+            <span id="txt-husband" class="font-bold text-xl text-gray-700"></span>
             <img src="https://cdn-icons-png.flaticon.com/128/3067/3067251.png" class="illustration">
         </div>
     </div>
 
-    <div class="p-6 mt-auto">
-        <button id="contBtn" disabled onclick="saveAndNext()" class="w-full bg-gray-300 text-white py-4 rounded-2xl font-bold text-lg shadow-lg active:scale-95 transition-all duration-300">
+    <div class="p-6">
+        <button id="contBtn" disabled onclick="saveAndNext()" class="w-full bg-gray-300 text-white py-4 rounded-xl font-bold text-lg active:scale-95 shadow-md">
             CONTINUE
         </button>
     </div>
 
     <script>
         document.getElementById('header').style.animationDelay = "0.1s";
-        const cards = document.querySelectorAll('.card-anim');
-        cards.forEach((card, index) => { card.style.animationDelay = (0.3 + (index * 0.15)) + "s"; });
+        document.querySelectorAll('.card-anim').forEach((card, index) => { card.style.animationDelay = (0.3 + (index * 0.15)) + "s"; });
 
         const translations = {
             "English": { title: "What's your role in the family?", subtitle: "This helps us provide you with relevant content", wife: "Wife | Mother", husband: "Husband | Father", btn: "CONTINUE" },

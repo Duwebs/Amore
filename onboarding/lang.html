@@ -99,7 +99,24 @@
             window.location.href = 'role.html'; 
         }, 600);
     }
+    
+    function goNext() {
+    const splash = document.getElementById('splash');
+    splash.classList.remove('hidden');
+    setTimeout(() => { splash.classList.add('opacity-100'); }, 10);
+    
+    // Thoda sa delay rakhein taaki animation feel ho
+    setTimeout(() => {
+        window.location.href = 'role.html'; 
+    }, 1500); // 1.5 second ka smooth transition
+}
+
 </script>
+
+<div id="splash" class="fixed inset-0 bg-[#FFF5F7] flex flex-col items-center justify-center z-50 hidden opacity-0 transition-opacity duration-500">
+    <img src="/assets/cutebaby.png" class="w-20 animate-bounce">
+    <p class="mt-4 font-bold text-[#FF4D6D] text-lg">Personalizing your experience...</p>
+</div>
 
 
 </body>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="h-full overflow-hidden">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,7 +7,8 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&display=swap');
-        body { font-family: 'Outfit', sans-serif; background-color: #FFFFFF; height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
+        /* Scrollable body */
+        body { font-family: 'Outfit', sans-serif; background-color: #FFFFFF; min-height: 100vh; overflow-y: auto; display: flex; flex-direction: column; }
         
         .header-anim { opacity: 0; animation: slideDown 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
         @keyframes slideDown { from { opacity: 0; transform: translateY(-50px); } to { opacity: 1; transform: translateY(0); } }
@@ -15,14 +16,12 @@
         .card-anim { opacity: 0; animation: slideRight 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
         @keyframes slideRight { from { opacity: 0; transform: translateX(100px); } to { opacity: 1; transform: translateX(0); } }
         
-        /* Fixed height for single screen layout */
-        .role-card { transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); cursor: pointer; border: 2px solid #E5E7EB; height: 16vh; position: relative; overflow: hidden; }
+        .role-card { transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); cursor: pointer; border: 2px solid #E5E7EB; min-height: 140px; position: relative; overflow: hidden; }
         .selected-role { border: 4px solid #FF4D6D !important; transform: scale(1.02); }
         
         .illustration { transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); width: 80px; }
         .selected-role .illustration { transform: translateY(-15px) scale(1.1); }
         
-        /* Button Press Effect */
         #contBtn { transition: transform 0.1s ease, background-color 0.3s ease; }
         #contBtn:active { transform: scale(0.97); }
     </style>
@@ -37,7 +36,7 @@
         </div>
     </div>
 
-    <div id="cards" class="px-6 py-6 flex flex-col gap-6 flex-1 justify-center">
+    <div id="cards" class="px-6 py-8 space-y-6 flex-1">
         <div onclick="selectRole(this, 'wife')" class="card-anim role-card bg-white p-6 rounded-3xl flex items-center justify-between shadow-lg border border-gray-100">
             <span id="txt-wife" class="font-bold text-2xl text-[#4A4A4A]"></span>
             <img src="https://cdn-icons-png.flaticon.com/128/3067/3067253.png" class="illustration">
@@ -49,7 +48,7 @@
         </div>
     </div>
 
-    <div class="p-6">
+    <div class="p-6 mt-auto">
         <button id="contBtn" disabled onclick="saveAndNext()" class="w-full bg-gray-300 text-white py-4 rounded-2xl font-bold text-lg shadow-lg active:scale-95 transition-all duration-300">
             CONTINUE
         </button>

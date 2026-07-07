@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Blessed With A...</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&display=swap');
+        body { font-family: 'Outfit', sans-serif; background-color: #FFFFFF; height: 100vh; overflow: hidden; display: flex; flex-direction: column; }
+        
+        .header-anim { opacity: 0; animation: slideDown 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
+        @keyframes slideDown { from { opacity: 0; transform: translateY(-50px); } to { opacity: 1; transform: translateY(0); } }
+        
+        .card-anim { opacity: 0; animation: slideInRight 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
+        @keyframes slideInRight { from { opacity: 0; transform: translateX(100px); } to { opacity: 1; transform: translateX(0); } }
+        
+        .gender-card { 
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+            cursor: pointer; border-radius: 16px; padding: 20px;
+            display: flex; align-items: center; justify-content: space-between;
+            border: 2px solid transparent; position: relative;
+        }
+        
+        .girl-card { background-color: #FCE7F3; }
+        .boy-card { background-color: #DBEAFE; }
+        
+        .illustration { 
+            width: 80px; 
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        .selected { border-color: #FF4D6D !important; transform: scale(1.02); }
+        .selected .illustration { 
+            transform: translateY(-40px) scale(1.2); 
+            filter: drop-shadow(0 10px 10px rgba(0,0,0,0.15));
+        }
+    </style>
+</head>
+<body class="flex flex-col h-full">
+
+    <div class="header-anim pt-8 pb-16 px-6 relative shrink-0 bg-[#FFFDF0]">
+        <h1 class="text-3xl font-extrabold text-[#4A4A4A] leading-tight">You've been<br>blessed with a....</h1>
+        <p class="text-[#8E8E8E] mt-3 text-sm">This helps us to provide you with accurate information about your baby</p>
+        
+        <div class="absolute -bottom-1 left-0 w-full overflow-hidden leading-[0]">
+            <svg viewBox="0 0 500 50" preserveAspectRatio="none" class="h-8 w-full"><path d="M0,0 C150,50 350,50 500,0 L500,50 L0,50 Z" fill="#FFFFFF"></path></svg>
+        </div>
+    </div>
+
+    <div class="px-6 flex flex-col justify-center flex-grow space-y-6">
+        <div onclick="selectGender(this, 'girl')" class="card-anim gender-card girl-card" style="animation-delay: 0.2s;">
+            <span class="font-bold text-xl text-gray-700">Girl</span>
+            <img src="https://cdn-icons-png.flaticon.com/128/3067/3067277.png" class="illustration">
+        </div>
+
+        <div onclick="selectGender(this, 'boy')" class="card-anim gender-card boy-card" style="animation-delay: 0.4s;">
+            <span class="font-bold text-xl text-gray-700">Boy</span>
+            <img src="https://cdn-icons-png.flaticon.com/128/3067/3067272.png" class="illustration">
+        </div>
+    </div>
+
+    <div class="p-6 shrink-0">
+        <button id="contBtn" disabled onclick="saveAndNext()" class="w-full bg-gray-300 text-white py-4 rounded-xl font-bold text-lg active:scale-95 shadow-md">
+            CONTINUE
+        </button>
+    </div>
+
+    <script>
+        function selectGender(el, gender) {
+            document.querySelectorAll('.gender-card').forEach(i => i.classList.remove('selected'));
+            el.classList.add('selected');
+            localStorage.setItem('babyGender', gender);
+            const btn = document.getElementById('contBtn');
+            btn.disabled = false;
+            btn.style.backgroundColor = "#FF4D6D";
+        }
+        function saveAndNext() { window.location.href = "home.html"; }
+    </script>
+</body>
+</html>

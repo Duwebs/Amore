@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pregnancy Status</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&display=swap');
+        body { font-family: 'Outfit', sans-serif; height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
+        .option-box { display: none; }
+        .active-option { display: block; }
+        .selected-date, .selected-week { background-color: #FF4D6D !important; color: white !important; border-radius: 50% !important; }
+        .selected-week { border-radius: 12px !important; }
+    </style>
+</head>
+<body>
+
+    <!-- Header with Wave -->
+    <div class="bg-[#D1FAE5] pt-10 pb-16 px-6 shrink-0 relative">
+        <h1 id="title" class="text-2xl font-extrabold text-[#4A4A4A]">Your expected delivery date?</h1>
+        <p class="text-[#6B7280] mt-2 text-sm">This helps us personalize your journey.</p>
+        <div class="absolute -bottom-1 left-0 w-full overflow-hidden leading-[0]">
+            <svg viewBox="0 0 500 50" preserveAspectRatio="none" class="h-8 w-full"><path d="M0,0 C150,50 350,50 500,0 L500,50 L0,50 Z" fill="#FFFFFF"></path></svg>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="flex-grow overflow-y-auto px-6 pt-6 pb-6">
+        
+        <!-- Date Picker -->
+        <div id="dateOption" class="option-box active-option">
+            <div class="flex justify-between items-center mb-6">
+                <div class="w-8"></div>
+                <div id="monthYear" class="font-bold text-lg text-gray-700">July 2026</div>
+                <button onclick="changeMonth(1)" class="p-2 font-bold text-xl text-gray-700">›</button>
+            </div>
+            <div id="calendar" class="grid grid-cols-7 gap-2 text-center text-sm font-semibold text-gray-700"></div>
+            <div class="mt-8 flex justify-between items-center border-t pt-4">
+                <span class="text-gray-500 font-medium">Estimated Due Date</span>
+                <span id="displayDate" class="font-bold text-gray-800">-</span>
+            </div>
+        </div>
+
+        <!-- Week Picker -->
+        <div id="weekOption" class="option-box">
+            <div class="grid grid-cols-5 gap-3 font-semibold text-gray-700">
+                <script>
+                    for(let i=1; i<=41; i++) {
+                        document.write(`<div onclick="selectWeek(this, ${i})" class="p-3 text-center border rounded-lg cursor-pointer hover:bg-pink-100">${i}</div>`);
+                    }
+                </script>
+            </div>
+            <div class="mt-8 flex justify-between items-center border-t pt-4">
+                <span class="text-gray-500 font-medium">Estimated Due Date</span>
+                <span id="displayWeek" class="font-bold text-gray-800">-</span>
+            </div>
+        </div>
+
+        <button onclick="toggleMode()" id="switchBtn" class="w-full mt-8 text-center text-[#FF4D6D] font-bold pb-4">
+            Select Week Instead >
+        </button>
+    </div>
+
+    <!-- Footer -->
+    <div class="p-6 shrink-0 border-t bg-white">
+        <button id="contBtn" disabled onclick="saveAndNext()" class="w-full bg-gray-300 text-white py-4 rounded-xl font-bold">CONTINUE</button>
+    </div>
+
+    <script>
+        let currentView = new Date();
+        const today = new Date(); today.setHours(0,0,0,0);
+        const maxDate = new Date(); maxDate.setMonth(today.getMonth() + 10);
+        let isDateMode = true;
+
+        function renderCalendar() {
+            const calendar = document.getElementById('calendar');
+            calendar.innerHTML = '';
+            document.getElementById('monthYear').innerText = currentView.toLocaleString('default', { month: 'long', year: 'numeric' });
+            
+            const firstDayIndex = new Date(currentView.getFullYear(), currentView.getMonth(), 1).getDay();
+            for(let j=0; j<firstDayIndex; j++) calendar.innerHTML += `<div></div>`;
+
+            const daysInMonth = new Date(currentView.getFullYear(), currentView.getMonth() + 1, 0).getDate();
+            for (let i = 1; i <= daysInMonth; i++) {
+                let dayDate = new Date(currentView.getFullYear(), currentView.getMonth(), i);
+                const dayEl = document.createElement('div');
+                dayEl.innerText = i;
+                if (dayDate < today || dayDate > maxDate) dayEl.className = "p-2 text-gray-300 cursor-not-allowed";
+                else {
+                    dayEl.className = "p-2 cursor-pointer hover:bg-pink-100 rounded-lg";
+                    dayEl.onclick = () => {
+                        document.querySelectorAll('.selected-date').forEach(i => i.classList.remove('selected-date'));
+                        dayEl.classList.add('selected-date');
+                        document.getElementById('displayDate').innerText = dayDate.toLocaleDateString('en-US', { month: 'long', day: '2-digit', year: 'numeric' });
+                        document.getElementById('contBtn').disabled = false;
+                        document.getElementById('contBtn').style.backgroundColor = "#FF4D6D";
+                    };
+                }
+                calendar.appendChild(dayEl);
+            }
+        }
+
+        function toggleMode() {
+            isDateMode = !isDateMode;
+            document.getElementById('dateOption').classList.toggle('active-option');
+            document.getElementById('weekOption').classList.toggle('active-option');
+            document.getElementById('title').innerText = isDateMode ? "Your expected delivery date?" : "Your current pregnancy week?";
+            document.getElementById('switchBtn').innerText = isDateMode ? "Select Week Instead >" : "Select Due Date Instead >";
+            document.getElementById('contBtn').disabled = true;
+            document.getElementById('contBtn').style.backgroundColor = "#D1D5DB";
+        }
+
+        function selectWeek(el, week) {
+            document.querySelectorAll('.selected-week').forEach(i => i.classList.remove('selected-week'));
+            el.classList.add('selected-week');
+            
+            // Estimated Date Logic: (40 - currentWeek) * 7 days
+            let estDate = new Date();
+            estDate.setDate(estDate.getDate() + (40 - week) * 7);
+            document.getElementById('displayWeek').innerText = estDate.toLocaleDateString('en-US', { month: 'long', day: '2-digit', year: 'numeric' });
+            
+            document.getElementById('contBtn').disabled = false;
+            document.getElementById('contBtn').style.backgroundColor = "#FF4D6D";
+        }
+
+        function changeMonth(offset) {
+            let nextView = new Date(currentView);
+            nextView.setMonth(nextView.getMonth() + offset);
+            if (nextView <= maxDate) { currentView = nextView; renderCalendar(); }
+        }
+
+        function saveAndNext() { window.location.href = "home.html"; }
+        renderCalendar();
+    </script>
+</body>
+</html>

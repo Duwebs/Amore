@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mom Stage</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&display=swap');
+        body { font-family: 'Outfit', sans-serif; background-color: #FFFFFF; }
+        
+        /* 1. Header Animation (Top to Bottom) */
+        .header-anim { opacity: 0; animation: slideDown 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
+        @keyframes slideDown { from { opacity: 0; transform: translateY(-50px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* 2. Cards & Button Animation (Right to Left) */
+        .slide-in-right { opacity: 0; animation: slideInRight 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
+        @keyframes slideInRight { from { opacity: 0; transform: translateX(100px); } to { opacity: 1; transform: translateX(0); } }
+
+        /* 3D Card Interaction */
+        .stage-card { 
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+            cursor: pointer; border-radius: 16px; padding: 20px;
+            display: flex; align-items: center; justify-content: space-between;
+            border: 2px solid transparent; overflow: visible; 
+            position: relative; margin-top: 30px;
+        }
+        
+        .illustration { 
+            width: 80px; transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .selected-stage { border-color: #FF4D6D !important; transform: scale(1.02); }
+        .selected-stage .illustration { 
+            transform: translateY(-40px) scale(1.2); 
+            filter: drop-shadow(0 10px 10px rgba(0,0,0,0.15));
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <div class="header-anim bg-[#FFF5F7] pt-12 pb-16 px-6 relative">
+        <h1 class="text-3xl font-extrabold text-[#4A4A4A] leading-tight">What life stage are you currently at?</h1>
+        <p class="text-[#8E8E8E] mt-3 text-sm">This helps us to provide relevant experience.</p>
+        <div class="absolute -bottom-1 left-0 w-full overflow-hidden leading-[0]">
+            <svg viewBox="0 0 500 50" preserveAspectRatio="none" class="h-10 w-full"><path d="M0,0 C150,50 350,50 500,0 L500,50 L0,50 Z" fill="#FFFFFF"></path></svg>
+        </div>
+    </div>
+
+    <!-- Cards -->
+    <div class="px-6 py-8">
+        <div onclick="selectStage(this, 'pregnant')" class="stage-card bg-[#DCFCE7] slide-in-right" style="animation-delay: 0.2s;">
+            <span class="font-bold text-xl text-gray-700">Pregnant</span>
+            <img src="https://cdn-icons-png.flaticon.com/128/3067/3067277.png" class="illustration">
+        </div>
+
+        <div onclick="selectStage(this, 'mother')" class="stage-card bg-[#FEF3C7] slide-in-right" style="animation-delay: 0.35s;">
+            <span class="font-bold text-xl text-gray-700">Mother</span>
+            <img src="https://cdn-icons-png.flaticon.com/128/3067/3067272.png" class="illustration">
+        </div>
+
+        <div onclick="selectStage(this, 'trying')" class="stage-card bg-[#EDE9FE] slide-in-right" style="animation-delay: 0.5s;">
+            <span class="font-bold text-xl text-gray-700">Trying to conceive</span>
+            <img src="https://cdn-icons-png.flaticon.com/128/3067/3067269.png" class="illustration">
+        </div>
+    </div>
+
+    <!-- Button -->
+    <div class="p-6">
+        <button id="contBtn" disabled onclick="saveAndNext()" class="w-full bg-gray-300 text-white py-4 rounded-xl font-bold text-lg active:scale-95 slide-in-right" style="animation-delay: 0.65s;">
+            CONTINUE
+        </button>
+    </div>
+
+    <script>
+        function selectStage(el, stage) {
+            document.querySelectorAll('.stage-card').forEach(i => i.classList.remove('selected-stage'));
+            el.classList.add('selected-stage');
+            localStorage.setItem('userStage', stage);
+            const btn = document.getElementById('contBtn');
+            btn.disabled = false;
+            btn.style.backgroundColor = "#FF4D6D";
+        }
+        function saveAndNext() { window.location.href = "home.html"; }
+    </script>
+</body>
+</html>

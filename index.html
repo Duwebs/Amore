@@ -81,6 +81,44 @@
                 }, 500);
             }, 3000);
         });
+        
+        function goNext() {
+    const splash = document.getElementById('splash');
+    const progressBar = document.getElementById('progress-bar');
+    
+    // Splash screen show karein
+    splash.classList.remove('hidden');
+    setTimeout(() => { splash.classList.add('opacity-100'); }, 10);
+    
+    // Progress bar ko 100% fill karein
+    setTimeout(() => {
+        progressBar.style.width = '100%';
+    }, 100);
+    
+    // 2.2 seconds baad next page par redirect karein
+    setTimeout(() => {
+        window.location.href = 'role.html'; 
+    }, 2200);
+}
+
+        
     </script>
+    
+    <!-- Splash Screen Overlay -->
+<div id="splash" class="fixed inset-0 bg-[#FFF5F7] flex flex-col items-center justify-center z-50 hidden opacity-0 transition-opacity duration-500">
+    <!-- Main Illustration/Logo -->
+    <img src="https://cdn-icons-png.flaticon.com/128/3067/3067272.png" class="w-24 h-24 mb-6 animate-bounce">
+    
+    <!-- Progress Bar Container -->
+    <div class="w-64 h-3 bg-gray-200 rounded-full overflow-hidden">
+        <div id="progress-bar" class="h-full bg-[#FF4D6D] w-0 transition-all duration-[2000ms] ease-out"></div>
+    </div>
+    
+    <!-- Loading Text -->
+    <p class="mt-4 font-bold text-[#FF4D6D] text-sm tracking-wide">Personalizing your experience...</p>
+</div>
+
+    
+    
 </body>
 </html>

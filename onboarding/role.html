@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="h-full overflow-hidden">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,56 +7,64 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&display=swap');
-        body { font-family: 'Outfit', sans-serif; background-color: #FFFDF5; min-height: 100vh; display: flex; flex-direction: column; }
+        body { font-family: 'Outfit', sans-serif; background-color: #FFFFFF; height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
         
-        /* Micro-interactions: Cards */
-        .role-card { 
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
-            cursor: pointer; 
-            border: 2px solid #E5E7EB; 
-        }
-        .selected-role { 
-            border: 2px solid #FF4D6D !important; 
-            background-color: #FFF5F7 !important; 
-            transform: scale(1.02); 
-        }
-        .illustration { transition: transform 0.3s ease; }
-        .selected-role .illustration { transform: scale(1.1); }
+        .header-anim { opacity: 0; animation: slideDown 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
+        @keyframes slideDown { from { opacity: 0; transform: translateY(-50px); } to { opacity: 1; transform: translateY(0); } }
+        
+        .card-anim { opacity: 0; animation: slideRight 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
+        @keyframes slideRight { from { opacity: 0; transform: translateX(100px); } to { opacity: 1; transform: translateX(0); } }
+        
+        /* Fixed height for single screen layout */
+        .role-card { transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); cursor: pointer; border: 2px solid #E5E7EB; height: 16vh; position: relative; overflow: hidden; }
+        .selected-role { border: 4px solid #FF4D6D !important; transform: scale(1.02); }
+        
+        .illustration { transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); width: 80px; }
+        .selected-role .illustration { transform: translateY(-15px) scale(1.1); }
+        
+        /* Button Press Effect */
+        #contBtn { transition: transform 0.1s ease, background-color 0.3s ease; }
+        #contBtn:active { transform: scale(0.97); }
     </style>
 </head>
 <body>
 
-    <div class="p-8 mt-6">
+    <div id="header" class="header-anim relative bg-[#FFFDF5] pt-8 pb-12 px-6 shadow-sm">
         <h1 id="title" class="text-3xl font-extrabold text-[#4A4A4A] leading-tight"></h1>
         <p id="subtitle" class="text-[#8E8E8E] mt-3"></p>
+        <div class="absolute -bottom-1 left-0 w-full overflow-hidden leading-[0]">
+            <svg viewBox="0 0 500 50" preserveAspectRatio="none" class="h-10 w-full"><path d="M0,0 C150,50 350,50 500,0 L500,50 L0,50 Z" fill="#FFFFFF"></path></svg>
+        </div>
     </div>
 
-    <div class="flex-1 px-6 space-y-4">
-        <div onclick="selectRole(this, 'wife')" class="role-card bg-white p-5 rounded-3xl flex items-center justify-between shadow-lg border border-gray-100">
-            <span id="txt-wife" class="font-bold text-xl text-[#4A4A4A]"></span>
-            <img src="https://cdn-icons-png.flaticon.com/128/3067/3067253.png" class="illustration w-16">
+    <div id="cards" class="px-6 py-6 flex flex-col gap-6 flex-1 justify-center">
+        <div onclick="selectRole(this, 'wife')" class="card-anim role-card bg-white p-6 rounded-3xl flex items-center justify-between shadow-lg border border-gray-100">
+            <span id="txt-wife" class="font-bold text-2xl text-[#4A4A4A]"></span>
+            <img src="https://cdn-icons-png.flaticon.com/128/3067/3067253.png" class="illustration">
         </div>
         
-        <div onclick="selectRole(this, 'husband')" class="role-card bg-white p-5 rounded-3xl flex items-center justify-between shadow-lg border border-gray-100">
-            <span id="txt-husband" class="font-bold text-xl text-[#4A4A4A]"></span>
-            <img src="https://cdn-icons-png.flaticon.com/128/3067/3067251.png" class="illustration w-16">
+        <div onclick="selectRole(this, 'husband')" class="card-anim role-card bg-white p-6 rounded-3xl flex items-center justify-between shadow-lg border border-gray-100">
+            <span id="txt-husband" class="font-bold text-2xl text-[#4A4A4A]"></span>
+            <img src="https://cdn-icons-png.flaticon.com/128/3067/3067251.png" class="illustration">
         </div>
     </div>
 
-    <div class="p-8">
-        <button id="contBtn" disabled onclick="saveAndNext()" class="w-full bg-gray-300 text-white py-4 rounded-2xl font-bold text-lg shadow-lg transition-all duration-300">
+    <div class="p-6">
+        <button id="contBtn" disabled onclick="saveAndNext()" class="w-full bg-gray-300 text-white py-4 rounded-2xl font-bold text-lg shadow-lg active:scale-95 transition-all duration-300">
             CONTINUE
         </button>
     </div>
 
     <script>
-        // 1. Translations Data
+        document.getElementById('header').style.animationDelay = "0.1s";
+        const cards = document.querySelectorAll('.card-anim');
+        cards.forEach((card, index) => { card.style.animationDelay = (0.3 + (index * 0.15)) + "s"; });
+
         const translations = {
             "English": { title: "What's your role in the family?", subtitle: "This helps us provide you with relevant content", wife: "Wife | Mother", husband: "Husband | Father", btn: "CONTINUE" },
             "हिन्दी": { title: "परिवार में आपकी भूमिका क्या है?", subtitle: "यह हमें आपकी भूमिका के अनुसार कंटेंट प्रदान करने में मदद करता है", wife: "पत्नी | माँ", husband: "पति | पिता", btn: "आगे बढ़ें" }
         };
 
-        // 2. Load and Apply Content
         const userLang = localStorage.getItem('userLanguage') || "English";
         const langData = translations[userLang] || translations["English"];
 
@@ -66,21 +74,16 @@
         document.getElementById('txt-husband').innerText = langData.husband;
         document.getElementById('contBtn').innerText = langData.btn;
 
-        // 3. Selection Logic
         function selectRole(el, role) {
             document.querySelectorAll('.role-card').forEach(i => i.classList.remove('selected-role'));
             el.classList.add('selected-role');
-            localStorage.setItem('userRole', role); // Role save kiya
-            
+            localStorage.setItem('userRole', role);
             const btn = document.getElementById('contBtn');
             btn.disabled = false;
             btn.style.backgroundColor = "#FF4D6D";
         }
 
-        // 4. Navigate to next page
-        function saveAndNext() {
-            window.location.href = "next_page.html"; // Yahan apni agli file ka naam daal do
-        }
+        function saveAndNext() { window.location.href = "next_page.html"; }
     </script>
 </body>
 </html>

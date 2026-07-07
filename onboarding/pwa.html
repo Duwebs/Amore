@@ -1,14 +1,74 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en" class="h-full">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Install App</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&display=swap');
+        body { font-family: 'Outfit', sans-serif; background: #FFFFFF; height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+        .float { animation: float 3s ease-in-out infinite; }
+        @keyframes float { 0% { transform: translateY(0px); } 50% { transform: translateY(-20px); } 100% { transform: translateY(0px); } }
+    </style>
 </head>
+<body class="p-6 text-center">
 
-<body>
-  
+    <!-- Cute Funny Baby SVG -->
+    <div class="float mb-8">
+        <svg width="150" height="150" viewBox="0 0 200 200">
+            <circle cx="100" cy="120" r="60" fill="#FFD1DC" />
+            <circle cx="100" cy="100" r="40" fill="#FFD1DC" />
+            <circle cx="85" cy="90" r="5" fill="#4A4A4A" />
+            <circle cx="115" cy="90" r="5" fill="#4A4A4A" />
+            <path d="M90 110 Q100 115 110 110" stroke="#4A4A4A" stroke-width="3" fill="none" />
+            <path d="M70 70 Q100 20 130 70" fill="#FF4D6D" />
+        </svg>
+    </div>
+
+    <!-- Personalized Message -->
+    <h1 id="message" class="text-3xl font-extrabold text-[#4A4A4A] mb-4">
+        Don't miss this!
+    </h1>
+    <p class="text-[#8E8E8E] mb-8 font-medium">Install our app to keep track of every special moment.</p>
+
+    <!-- Install Button -->
+    <button id="installBtn" class="w-full bg-[#FF4D6D] text-white py-4 rounded-2xl font-bold text-lg shadow-xl shadow-pink-200 active:scale-95 transition-all">
+        INSTALL APP
+    </button>
+
+    <script>
+        // Check localStorage to see if user is Mom or Dad
+        // Tumne Mom-Stage.html mein stage save kiya tha
+        const userStage = localStorage.getItem('userStage'); 
+        const messageEl = document.getElementById('message');
+        
+        // Customizing message based on stage
+        if(userStage === 'mother') {
+            messageEl.innerText = "Don't miss this, Mommy! 🍼";
+        } else if(userStage === 'trying' || userStage === 'pregnant') {
+            messageEl.innerText = "Don't miss this, future parent! ✨";
+        } else {
+            messageEl.innerText = "Don't miss this! 🍼";
+        }
+
+        // PWA Install Logic
+        let deferredPrompt;
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+        });
+
+        document.getElementById('installBtn').addEventListener('click', () => {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice.then((choiceResult) => {
+                    deferredPrompt = null;
+                });
+            } else {
+                alert("App is already installed or browser doesn't support PWA install.");
+            }
+        });
+    </script>
 </body>
-
 </html>

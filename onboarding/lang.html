@@ -2,123 +2,186 @@
 <html lang="en">
 <head> 
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Select Language</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Select Language</title>
     <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&display=swap');
-        /* Body se height aur overflow hata diya taaki wo content ke sath scroll ho sake */
-        body { font-family: 'Outfit', sans-serif; background-color: #FFFFFF; min-height: 100vh; }
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght=400;600;800&display=swap');
         
-        .lang-card { transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); cursor: pointer; position: relative; overflow: hidden; }
-        .selected { border: 4px solid #FF4D6D !important; transform: scale(0.95); }
+        body { 
+            font-family: 'Outfit', sans-serif; 
+            background-color: #FFFFFF; 
+            -webkit-font-smoothing: antialiased;
+        }
+        
+        /* --- 1. SMOOTH HEADER ENTRANCE ANIMATION (UPAR SE NICHE) --- */
+        .header-appear {
+            animation: headerDrop 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        @keyframes headerDrop {
+            0% { transform: translateY(-100%); opacity: 0; }
+            100% { transform: translateY(0); opacity: 1; }
+        }
+
+        /* --- Language Cards Premium Physics --- */
+        .lang-card { 
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.15); 
+            cursor: pointer; 
+            position: relative; 
+            overflow: hidden; 
+        }
+        .selected { 
+            border: 4px solid #FF4D6D !important; 
+            transform: scale(0.96); 
+            box-shadow: 0 4px 15px rgba(255, 77, 109, 0.2);
+        }
         .check-icon { display: none; }
         .selected .check-icon { display: flex; }
         
-        .slide-out { animation: slideLeft 0.5s forwards; }
-        @keyframes slideLeft { to { transform: translateX(-150%); opacity: 0; } }
-        .header-out { animation: fadeOut 0.4s forwards; }
+        /* --- PREMIUM SHIMMER EFFECT (FIXED & TESTED) --- */
+        .lang-card::after, #contBtn:not(:disabled)::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -150%;
+            width: 150%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent 0%,
+                rgba(255, 255, 255, 0.45) 50%,
+                transparent 100%
+            );
+            transform: skewX(-25deg);
+            pointer-events: none;
+        }
+
+        .lang-card::after {
+            animation: luxuryShine 4.8s infinite ease-in-out;
+        }
+
+        #contBtn:not(:disabled)::after {
+            animation: luxuryShine 3.8s infinite ease-in-out;
+            animation-delay: 1.2s;
+        }
+
+        @keyframes luxuryShine {
+            0% { left: -150%; }
+            24% { left: 150%; }
+            100% { left: 150%; }
+        }
+
+        /* --- Native Page Exit Flow --- */
+        .slide-out { animation: slideLeft 0.5s cubic-bezier(0.7, 0, 0.3, 1) forwards; }
+        @keyframes slideLeft { to { transform: translateX(-150%); opacity: 0; filter: blur(4px); } }
+        
+        .header-out { animation: fadeOut 0.4s ease-in forwards; }
         @keyframes fadeOut { to { opacity: 0; transform: translateY(-20px); } }
     </style>
 </head>
-<body class="flex flex-col">
+<body class="flex flex-col h-[100dvh] justify-between overflow-hidden bg-white select-none">
 
-    <div id="header" class="relative bg-[#FFF5F7] pt-8 pb-14 px-6 shadow-sm">
-        <h1 class="text-3xl font-extrabold text-[#4A4A4A] leading-tight">Choose your <br>language</h1>
-        <p class="text-[#8E8E8E] mt-3">This helps us to provide content in your preferred language</p>
-        <div class="absolute -bottom-1 left-0 w-full overflow-hidden">
-            <svg viewBox="0 0 500 50" preserveAspectRatio="none" class="h-10 w-full"><path d="M0,0 C150,50 350,50 500,0 L500,50 L0,50 Z" fill="#FFFFFF"></path></svg>
+    <div id="header" class="header-appear relative bg-[#FFF5F7] pt-8 pb-16 px-6 flex-shrink-0 z-20">
+        <h1 class="text-4xl font-extrabold text-[#4A4A4A] leading-[1.15] tracking-tight">
+            Choose your <br>language
+        </h1>
+        <p class="text-[#8E8E8E] text-sm mt-2.5 font-medium">
+            This helps us to provide content in your preferred language
+        </p>
+        
+        <div class="absolute bottom-0 left-0 w-full overflow-hidden leading-[0]">
+            <svg viewBox="0 0 500 50" preserveAspectRatio="none" class="relative block w-full h-10 transform scale-y-105 origin-bottom">
+                <path d="M0,20 C150,45 350,45 500,20 L500,50 L0,50 Z" fill="#FFFFFF"></path>
+            </svg>
         </div>
     </div>
 
-    <div id="grid" class="grid grid-cols-2 gap-4 p-5">
-        <div onclick="select(this)" class="lang-card bg-[#FFB7B7] p-4 rounded-3xl flex flex-col justify-center shadow-lg h-32">
-            <h2 class="font-bold text-white text-lg">English</h2>
-            <p class="text-white/80 text-sm font-medium">English</p>
-            <div class="check-icon absolute top-3 right-3 bg-white rounded-full p-1"><svg class="w-4 h-4 text-[#FF4D6D]" fill="currentColor" viewBox="0 0 20 20"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/></svg></div>
-            <img src="/assets/langeng.svg" class="absolute -right-2 -bottom-2 w-16 opacity-60 pointer-events-none">
+    <div id="grid" class="grid grid-cols-2 gap-4 px-5 py-2 flex-grow content-center z-10">
+        <div onclick="select(this, 'english')" class="lang-card bg-[#FFB7B7] p-4 rounded-3xl flex flex-col justify-center shadow-lg h-32">
+            <h2 class="font-bold text-white text-xl leading-tight">English</h2>
+            <p class="text-white/80 text-sm font-medium mt-0.5">English</p>
+            <div class="check-icon absolute top-3 right-3 bg-white rounded-full p-1 shadow-sm"><svg class="w-3.5 h-3.5 text-[#FF4D6D]" fill="currentColor" viewBox="0 0 20 20"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/></svg></div>
+            <img src="/assets/langeng.svg" class="absolute -right-1 -bottom-1 w-16 opacity-50 pointer-events-none">
         </div>
-        <div onclick="select(this)" class="lang-card bg-[#C7B7FF] p-4 rounded-3xl flex flex-col justify-center shadow-lg h-32">
-            <h2 class="font-bold text-white text-lg">हिन्दी</h2>
-            <p class="text-white/80 text-sm font-medium">Hindi</p>
-            <div class="check-icon absolute top-3 right-3 bg-white rounded-full p-1"><svg class="w-4 h-4 text-[#FF4D6D]" fill="currentColor" viewBox="0 0 20 20"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/></svg></div>
-            <img src="https://cdn-icons-png.flaticon.com/128/2920/2920336.png" class="absolute -right-2 -bottom-2 w-16 opacity-60 pointer-events-none">
+        
+        <div onclick="select(this, 'hindi')" class="lang-card bg-[#C7B7FF] p-4 rounded-3xl flex flex-col justify-center shadow-lg h-32">
+            <h2 class="font-bold text-white text-xl leading-tight">हिन्दी</h2>
+            <p class="text-white/80 text-sm font-medium mt-0.5">Hindi</p>
+            <div class="check-icon absolute top-3 right-3 bg-white rounded-full p-1 shadow-sm"><svg class="w-3.5 h-3.5 text-[#FF4D6D]" fill="currentColor" viewBox="0 0 20 20"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/></svg></div>
+            <img src="https://cdn-icons-png.flaticon.com/128/2920/2920336.png" class="absolute -right-1 -bottom-1 w-16 opacity-50 pointer-events-none">
         </div>
-        <div onclick="select(this)" class="lang-card bg-[#FFD1A9] p-4 rounded-3xl flex flex-col justify-center shadow-lg h-32">
-            <h2 class="font-bold text-white text-lg">বাংলা</h2>
-            <p class="text-white/80 text-sm font-medium">Bangla</p>
-            <div class="check-icon absolute top-3 right-3 bg-white rounded-full p-1"><svg class="w-4 h-4 text-[#FF4D6D]" fill="currentColor" viewBox="0 0 20 20"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/></svg></div>
-            <img src="https://cdn-icons-png.flaticon.com/128/2920/2920336.png" class="absolute -right-2 -bottom-2 w-16 opacity-60 pointer-events-none">
+        
+        <div onclick="select(this, 'bangla')" class="lang-card bg-[#FFD1A9] p-4 rounded-3xl flex flex-col justify-center shadow-lg h-32">
+            <h2 class="font-bold text-white text-xl leading-tight">বাংলা</h2>
+            <p class="text-white/80 text-sm font-medium mt-0.5">Bangla</p>
+            <div class="check-icon absolute top-3 right-3 bg-white rounded-full p-1 shadow-sm"><svg class="w-3.5 h-3.5 text-[#FF4D6D]" fill="currentColor" viewBox="0 0 20 20"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/></svg></div>
+            <img src="https://cdn-icons-png.flaticon.com/128/2920/2920336.png" class="absolute -right-1 -bottom-1 w-16 opacity-50 pointer-events-none">
         </div>
-        <div onclick="select(this)" class="lang-card bg-[#98E4D5] p-4 rounded-3xl flex flex-col justify-center shadow-lg h-32">
-            <h2 class="font-bold text-white text-lg">తెలుగు</h2>
-            <p class="text-white/80 text-sm font-medium">Telugu</p>
-            <div class="check-icon absolute top-3 right-3 bg-white rounded-full p-1"><svg class="w-4 h-4 text-[#FF4D6D]" fill="currentColor" viewBox="0 0 20 20"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/></svg></div>
-            <img src="https://cdn-icons-png.flaticon.com/128/2920/2920336.png" class="absolute -right-2 -bottom-2 w-16 opacity-60 pointer-events-none">
+        
+        <div onclick="select(this, 'telugu')" class="lang-card bg-[#98E4D5] p-4 rounded-3xl flex flex-col justify-center shadow-lg h-32">
+            <h2 class="font-bold text-white text-xl leading-tight">తెలుగు</h2>
+            <p class="text-white/80 text-sm font-medium mt-0.5">Telugu</p>
+            <div class="check-icon absolute top-3 right-3 bg-white rounded-full p-1 shadow-sm"><svg class="w-3.5 h-3.5 text-[#FF4D6D]" fill="currentColor" viewBox="0 0 20 20"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/></svg></div>
+            <img src="https://cdn-icons-png.flaticon.com/128/2920/2920336.png" class="absolute -right-1 -bottom-1 w-16 opacity-50 pointer-events-none">
         </div>
-        <div onclick="select(this)" class="lang-card bg-[#A3C1FF] p-4 rounded-3xl flex flex-col justify-center shadow-lg h-32">
-            <h2 class="font-bold text-white text-lg">தமிழ்</h2>
-            <p class="text-white/80 text-sm font-medium">Tamil</p>
-            <div class="check-icon absolute top-3 right-3 bg-white rounded-full p-1"><svg class="w-4 h-4 text-[#FF4D6D]" fill="currentColor" viewBox="0 0 20 20"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/></svg></div>
-            <img src="https://cdn-icons-png.flaticon.com/128/2920/2920336.png" class="absolute -right-2 -bottom-2 w-16 opacity-60 pointer-events-none">
+        
+        <div onclick="select(this, 'tamil')" class="lang-card bg-[#A3C1FF] p-4 rounded-3xl flex flex-col justify-center shadow-lg h-32">
+            <h2 class="font-bold text-white text-xl leading-tight">தமிழ்</h2>
+            <p class="text-white/80 text-sm font-medium mt-0.5">Tamil</p>
+            <div class="check-icon absolute top-3 right-3 bg-white rounded-full p-1 shadow-sm"><svg class="w-3.5 h-3.5 text-[#FF4D6D]" fill="currentColor" viewBox="0 0 20 20"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/></svg></div>
+            <img src="https://cdn-icons-png.flaticon.com/128/2920/2920336.png" class="absolute -right-1 -bottom-1 w-16 opacity-50 pointer-events-none">
         </div>
-        <div onclick="select(this)" class="lang-card bg-[#FFE8A3] p-4 rounded-3xl flex flex-col justify-center shadow-lg h-32">
-            <h2 class="font-bold text-white text-lg">ಕನ್ನಡ</h2>
-            <p class="text-white/80 text-sm font-medium">Kannada</p>
-            <div class="check-icon absolute top-3 right-3 bg-white rounded-full p-1"><svg class="w-4 h-4 text-[#FF4D6D]" fill="currentColor" viewBox="0 0 20 20"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/></svg></div>
-            <img src="/assets/langkan.svg" class="absolute -right-2 -bottom-2 w-16 opacity-60 pointer-events-none">
+        
+        <div onclick="select(this, 'kannada')" class="lang-card bg-[#FFE8A3] p-4 rounded-3xl flex flex-col justify-center shadow-lg h-32">
+            <h2 class="font-bold text-white text-xl leading-tight">ಕನ್ನಡ</h2>
+            <p class="text-white/80 text-sm font-medium mt-0.5">Kannada</p>
+            <div class="check-icon absolute top-3 right-3 bg-white rounded-full p-1 shadow-sm"><svg class="w-3.5 h-3.5 text-[#FF4D6D]" fill="currentColor" viewBox="0 0 20 20"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/></svg></div>
+            <img src="/assets/langkan.svg" class="absolute -right-1 -bottom-1 w-16 opacity-50 pointer-events-none">
         </div>
     </div>
     
-<div class="p-5">
-    <button id="contBtn" disabled onclick="goNext()" class="w-full bg-gray-300 text-white py-4 rounded-2xl font-bold text-lg transition-all shadow-md">CONTINUE</button>
-</div>
+    <div class="p-5 w-full bg-white flex-shrink-0 z-20">
+        <button id="contBtn" disabled onclick="goNext()" class="w-full bg-gray-300 text-white py-4 rounded-2xl font-bold text-lg transition-all duration-300 shadow-md relative overflow-hidden">
+            CONTINUE
+        </button>
+    </div>
 
-<script>
-    function select(el, lang) {
-        // Selection logic
-        document.querySelectorAll('.lang-card').forEach(i => i.classList.remove('selected'));
-        el.classList.add('selected');
-        
-        // Language ko localStorage mein save karo taaki role.html isse padh sake
-        localStorage.setItem('userLanguage', lang);
-        
-        const btn = document.getElementById('contBtn');
-        btn.disabled = false;
-        btn.style.backgroundColor = "#FF4D6D";
-    }
+    <div id="splash" class="fixed inset-0 bg-[#FFF5F7] flex flex-col items-center justify-center z-50 hidden opacity-0 transition-opacity duration-500">
+        <img src="/assets/cutebaby.png" class="w-20 animate-bounce">
+        <p class="mt-4 font-bold text-[#FF4D6D] text-lg">Personalizing your experience...</p>
+    </div>
 
-    function goNext() {
-        // 1. Animation start karo
-        document.getElementById('header').classList.add('header-out');
-        document.querySelectorAll('.lang-card').forEach((card, index) => {
-            setTimeout(() => { card.classList.add('slide-out'); }, index * 80);
-        });
+    <script>
+        function select(el, lang) {
+            document.querySelectorAll('.lang-card').forEach(i => i.classList.remove('selected'));
+            el.classList.add('selected');
+            
+            localStorage.setItem('userLanguage', lang);
+            
+            const btn = document.getElementById('contBtn');
+            btn.disabled = false;
+            btn.style.backgroundColor = "#FF4D6D";
+            btn.style.boxShadow = "0 8px 25px rgba(255, 77, 109, 0.35)";
+        }
 
-        // 2. Animation khatam hone ke baad redirection (The Bridge)
-        setTimeout(() => {
-            window.location.href = 'role.html'; 
-        }, 600);
-    }
-    
-    function goNext() {
-    const splash = document.getElementById('splash');
-    splash.classList.remove('hidden');
-    setTimeout(() => { splash.classList.add('opacity-100'); }, 10);
-    
-    // Thoda sa delay rakhein taaki animation feel ho
-    setTimeout(() => {
-        window.location.href = 'role.html'; 
-    }, 1500); // 1.5 second ka smooth transition
-}
+        function goNext() {
+            document.getElementById('header').classList.add('header-out');
+            document.querySelectorAll('.lang-card').forEach((card, index) => {
+                setTimeout(() => { card.classList.add('slide-out'); }, index * 50);
+            });
 
-</script>
-
-<div id="splash" class="fixed inset-0 bg-[#FFF5F7] flex flex-col items-center justify-center z-50 hidden opacity-0 transition-opacity duration-500">
-    <img src="/assets/cutebaby.png" class="w-20 animate-bounce">
-    <p class="mt-4 font-bold text-[#FF4D6D] text-lg">Personalizing your experience...</p>
-</div>
-
-
+            setTimeout(() => {
+                const splash = document.getElementById('splash');
+                splash.classList.remove('hidden');
+                requestAnimationFrame(() => {
+                    splash.classList.add('opacity-100');
+                });
+            }, 400);
+            
+            setTimeout(() => {
+                window.location.href = 'role.html'; 
+            }, 2000); 
+        }
+    </script>
 </body>
 </html>

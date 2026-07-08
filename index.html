@@ -1,89 +1,209 @@
 <!DOCTYPE html>
-<html lang="hi">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Amore App</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap" rel="stylesheet">
+    <title>AMORE</title>
+    
+    <!-- Ultra-Clean Rounded Premium Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@600;700&display=swap" rel="stylesheet">
+    
     <style>
-        body, html { margin: 0; padding: 0; height: 100%; font-family: 'Poppins', sans-serif; overflow: hidden; }
-
-        #splash-screen {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle at center, #ffffff 0%, #fff5f7 40%, #ffeef2 100%);
-            display: flex; flex-direction: column; justify-content: center; align-items: center;
-            z-index: 9999; transition: opacity 0.8s ease;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
-        .logo-container {
-            width: 130px; height: 130px;
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(12px);
-            border-radius: 35px;
-            display: flex; justify-content: center; align-items: center;
-            box-shadow: 0 15px 35px rgba(255, 150, 170, 0.2);
-            animation: bounce-slow 3s infinite ease-in-out;
-            margin-bottom: 20px;
+        body {
+            /* Clean iOS-style canvas background with a touch of warm luxury */
+            background: #FFF9FA; 
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Quicksand', -apple-system, sans-serif;
+            overflow: hidden;
         }
 
-        .logo-container img { width: 75px; height: 75px; }
+        /* Ambient subtle light leak behind the logo for high-end depth */
+        .ambient-glow {
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(255, 117, 151, 0.06) 0%, rgba(255, 255, 255, 0) 70%);
+            z-index: 1;
+            pointer-events: none;
+        }
 
-        /* Updated Logo styling */
-        .brand-logo-main {
-            width: 200px; /* Logo ki width adjust karein */
+        /* Master App Wrapper */
+        .app-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            z-index: 10;
+            will-change: transform, opacity;
+            /* Premium iOS Launch Spring Curve */
+            animation: appLaunchEntrance 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        /* --- 1. iOS Premium Squircle Frame (baby.png) --- */
+        .app-icon-squircle {
+            width: 125px;
+            height: 125px;
+            background: #FFFFFF;
+            border-radius: 35px; /* Perfect native look */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            
+            /* High-end multi-layered premium depth shadow */
+            box-shadow: 
+                0 15px 35px rgba(255, 142, 165, 0.12), 
+                0 5px 12px rgba(0, 0, 0, 0.02),
+                inset 0 -2px 5px rgba(255, 142, 165, 0.05);
+            margin-bottom: 24px;
+        }
+
+        .app-icon-squircle img {
+            width: 70%;
+            height: 70%;
+            object-fit: contain;
+        }
+
+        /* --- 2. Wordmark Text Graphic (amore.svg) --- */
+        .app-logo-svg {
+            width: 200px;
             height: auto;
-            animation: fadeIn 1.2s ease-out;
+            margin-bottom: 10px;
+            display: block;
+            position: relative;
         }
 
-        .tagline { 
-            color: #ffadb8; font-size: 13px; margin-top: 15px; 
-            letter-spacing: 3px; text-transform: uppercase;
+        /* --- THE WOW SHINING FACTOR: Premium Gloss Ribbon --- */
+        .app-container::after {
+            content: '';
+            position: absolute;
+            top: -60%;
+            left: -150%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                110deg,
+                transparent 0%,
+                rgba(255, 255, 255, 0) 35%,
+                rgba(255, 255, 255, 0.8) 50%,
+                rgba(255, 255, 255, 0) 65%,
+                transparent 100%
+            );
+            pointer-events: none;
+            /* Ultra-smooth slower sweep so it looks elegant, not rushed */
+            animation: metallicGloss 2.6s infinite ease-in-out;
+            animation-delay: 0.5s;
         }
 
-        @keyframes bounce-slow {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-15px); }
+        /* --- 3. Minimal Tagline --- */
+        .app-tagline {
+            font-size: 0.85rem;
+            color: #FFA3B8;
+            font-weight: 700;
+            letter-spacing: 4.5px;
+            text-transform: uppercase;
+            margin-bottom: 55px;
+            opacity: 0.9;
         }
 
-        @keyframes fadeIn {
-            0% { opacity: 0; transform: translateY(10px); }
-            100% { opacity: 1; transform: translateY(0); }
+        /* --- 4. Smooth Native Progress Indicator --- */
+        .app-progress-bar {
+            width: 130px;
+            height: 3px;
+            background: rgba(255, 163, 184, 0.12);
+            border-radius: 100px;
+            overflow: hidden;
         }
 
-        .hidden { opacity: 0; pointer-events: none; }
+        .app-progress-fill {
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(90deg, #FF7597, #FFA3B8);
+            border-radius: 100px;
+            animation: smoothBarFill 2.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+        }
+
+        /* --- BUTTERY SMOOTH APP EXIT --- */
+        .app-native-switch {
+            animation: appScaleFadeOut 0.45s cubic-bezier(0.33, 1, 0.68, 1) forwards;
+        }
+
+
+        /* --- Hardware-Accelerated Keyframes --- */
+        @keyframes appLaunchEntrance {
+            0% { opacity: 0; transform: scale3d(0.95, 0.95, 1); filter: blur(3px); }
+            100% { opacity: 1; transform: scale3d(1, 1, 1); filter: blur(0px); }
+        }
+
+        @keyframes metallicGloss {
+            0% { left: -150%; }
+            40%, 100% { left: 150%; }
+        }
+
+        @keyframes smoothBarFill {
+            to { width: 100%; }
+        }
+
+        /* Pure premium app fade-out (just like sliding into the next page natively) */
+        @keyframes appScaleFadeOut {
+            0% { opacity: 1; transform: scale3d(1, 1, 1); filter: blur(0px); }
+            100% { opacity: 0; transform: scale3d(0.98, 0.98, 1); filter: blur(2px); }
+        }
     </style>
 </head>
-<body oncontextmenu="return false;" onselectstart="return false;" ondragstart="return false;">
+<body>
 
-    <div id="splash-screen">
-        <div class="logo-container">
-            <img src="/assets/amore_iconV01.svg" alt="App Icon">
+    <!-- Subtle luxury dynamic glow element -->
+    <div class="ambient-glow"></div>
+
+    <!-- Clean Production-Ready UI Layout -->
+    <div class="app-container" id="appSplash">
+        
+        <!-- Premium Square-Circle Frame for baby.png -->
+        <div class="app-icon-squircle">
+            <img src="/assets/amore_iconV01.svg" alt="Amore App Icon">
         </div>
         
-        <!-- Yahan main logo SVG set kar diya hai -->
-        <img src="/assets/amore_logo.svg" alt="Amore" class="brand-logo-main">
+        <!-- Clean Vector Text Asset amore.svg -->
+        <img src="/assets/amore_logo.svg" class="app-logo-svg" alt="AMORE">
         
-        <p class="tagline">For Your Little One :)</p>
+        <!-- Elegant Tagline -->
+        <div class="app-tagline">For Your Little One :)</div>
+        
+        <!-- Minimal Native Loader Bar -->
+        <div class="app-progress-bar">
+            <div class="app-progress-fill"></div>
+        </div>
+        
     </div>
 
     <script>
-        window.addEventListener("load", () => {
-            setTimeout(() => {
-                const splash = document.getElementById("splash-screen");
-                splash.classList.add("hidden");
-                
-                setTimeout(() => {
-                    if (localStorage.getItem('onboardingComplete') === 'true') {
-                        window.location.href = "dashboard.html";
-                    } else {
-                        window.location.href = "onboarding/lang.html";
-                    }
-                }, 500);
-            }, 3000);
-        });
+        const appSplash = document.getElementById('appSplash');
+
+        // Fast & crisp mobile app timing: 2.9 Seconds total
         
-        
+        // 1. Splash screens on premium apps fade out slightly before the script takes you away
+        setTimeout(() => {
+            appSplash.classList.add('app-native-switch');
+            document.body.style.transition = "background 0.4s ease";
+            document.body.style.background = "#FFFFFF"; // Blends 100% smoothly with the dashboard background
+        }, 2450);
+
+        // 2. Instant dashboard hook without any lag
+        setTimeout(() => {
+            window.location.href = 'onboarding/lang.html';
+        }, 2900);
     </script>
-   
 </body>
 </html>

@@ -7,15 +7,29 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&display=swap');
-        body { font-family: 'Outfit', sans-serif; height: 100vh; display: flex; flex-direction: column; background-color: #FAFAFA; }
+        body { font-family: 'Outfit', sans-serif; height: 100vh; display: flex; flex-direction: column; background-color: #FAFAFA; overflow: hidden; }
         .lavender-header { background: #E9E1FF; }
         .btn-hover:active { transform: scale(0.95); }
+
+        /* Upar se niche aane wali animation */
+        @keyframes slideDown {
+            from {
+                transform: translateY(-100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        .animate-slide-down {
+            animation: slideDown 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
     </style>
 </head>
 <body>
 
-    <!-- Header -->
-    <div class="lavender-header pt-12 pb-20 px-6 relative shrink-0 rounded-b-[3rem]">
+    <div class="lavender-header pt-12 pb-20 px-6 relative shrink-0 rounded-b-[3rem] animate-slide-down">
         <h1 class="text-3xl font-bold text-[#4A4A4A] leading-tight">How long does your period last?</h1>
         <p class="text-[#7C6A98] mt-2 text-sm font-medium">Knowing this helps us track your cycle accurately</p>
         
@@ -26,7 +40,6 @@
         </div>
     </div>
 
-    <!-- Counter Section -->
     <div class="flex-grow flex flex-col items-center justify-center">
         <div class="bg-white p-8 rounded-3xl shadow-sm border border-purple-50 flex items-center gap-8">
             <button onclick="updatePeriod(-1)" class="btn-hover w-16 h-16 rounded-full bg-gray-100 text-gray-400 text-3xl font-bold hover:bg-purple-100 hover:text-purple-600 transition">-</button>
@@ -40,12 +53,11 @@
         </div>
     </div>
 
-    <!-- Footer -->
     <div class="p-6 shrink-0">
-        <p onclick="window.location.href='pwa.html'" class="text-center text-[#7C6A98] font-semibold mb-6 cursor-pointer hover:text-[#FF4D6D] transition">
+        <p onclick="window.location.href='../pwa.html'" class="text-center text-[#7C6A98] font-semibold mb-6 cursor-pointer hover:text-[#FF4D6D] transition">
             I'm not sure ❯
         </p>
-        <button onclick="window.location.href='pwa.html'" class="w-full bg-[#FF4D6D] text-white py-4 rounded-2xl font-bold text-lg shadow-xl shadow-pink-100 hover:bg-[#e64662] transition-all">
+        <button onclick="window.location.href='../pwa.html'" class="w-full bg-[#FF4D6D] text-white py-4 rounded-2xl font-bold text-lg shadow-xl shadow-pink-100 hover:bg-[#e64662] transition-all">
             SAVE & CONTINUE
         </button>
     </div>

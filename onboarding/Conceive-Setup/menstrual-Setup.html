@@ -8,17 +8,23 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&display=swap');
         body { font-family: 'Outfit', sans-serif; height: 100vh; display: flex; flex-direction: column; background-color: #FAFAFA; }
+        
+        /* Smooth Slide-Down Animation */
+        .header-anim { opacity: 0; animation: slideDown 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
+        @keyframes slideDown { from { opacity: 0; transform: translateY(-50px); } to { opacity: 1; transform: translateY(0); } }
+
         .lavender-header { background: #E9E1FF; }
         .btn-hover:active { transform: scale(0.95); }
     </style>
 </head>
 <body>
 
-    <!-- Header -->
-    <div class="lavender-header pt-12 pb-20 px-6 relative shrink-0 rounded-b-[3rem]">
+    <!-- Header with Animation -->
+    <div class="header-anim lavender-header pt-12 pb-20 px-6 relative shrink-0 rounded-b-[3rem]">
         <h1 class="text-3xl font-bold text-[#4A4A4A] leading-tight">Average length of menstrual cycle?</h1>
         <p class="text-[#7C6A98] mt-2 text-sm font-medium">This helps us to predict your fertile days</p>
         
+        <!-- Wave -->
         <div class="absolute -bottom-1 left-0 w-full overflow-hidden leading-[0]">
             <svg viewBox="0 0 500 150" preserveAspectRatio="none" class="h-16 w-full">
                 <path d="M0.00,49.98 C150.00,150.00 349.20,-49.98 500.00,49.98 L500.00,150.00 L0.00,150.00 Z" fill="#FAFAFA"></path>
@@ -42,22 +48,25 @@
 
     <!-- Footer -->
     <div class="p-6 shrink-0">
-        <p onclick=window.location.href='period-setup.html' class="text-center text-[#7C6A98] font-semibold mb-6 cursor-pointer hover:text-[#FF4D6D] transition">
+        <!-- Redirection Logic: IDK -> period-setup.html -->
+        <p onclick="window.location.href='period-setup.html'" class="text-center text-[#7C6A98] font-semibold mb-6 cursor-pointer hover:text-[#FF4D6D] transition">
             I don't know ❯
         </p>
-        <button onclick=window.location.href='pwa.html' class="w-full bg-[#FF4D6D] text-white py-4 rounded-2xl font-bold text-lg shadow-xl shadow-pink-100 hover:bg-[#e64662] transition-all">
-            SAVE & CONTINUE
-        </button>
+        
+        <!-- Redirection Logic: Save & Continue -> pwa.html -->
+<button onclick="window.location.href='../pwa.html'" class="w-full bg-[#FF4D6D] text-white py-4 rounded-2xl font-bold text-lg shadow-xl shadow-pink-100 hover:bg-[#e64662] transition-all">
+    SAVE & CONTINUE
+</button>
     </div>
 
     <script>
         let cycle = 28;
         function updateCycle(change) {
-            // Cycle 21 se 45 days ke beech hoti hai
             if (cycle + change >= 21 && cycle + change <= 45) {
                 cycle += change;
                 const el = document.getElementById('cycleValue');
                 el.innerText = cycle;
+                
                 // Animation effect
                 el.style.transform = 'scale(1.1)';
                 setTimeout(() => el.style.transform = 'scale(1)', 100);
